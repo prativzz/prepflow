@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-neutral-light text-neutral-darkBg antialiased font-sans transition-colors duration-200;
+  }
+  
+  /* Dark mode support if we add a 'dark' class to html */
+  .dark body {
+    @apply bg-neutral-darkBg text-neutral-light;
+  }
+}
