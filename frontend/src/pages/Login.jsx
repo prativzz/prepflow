@@ -17,6 +17,11 @@ const loginSchema = z.object({
 
 const Login = () => {
   const [serverError, setServerError] = useState('');
+  const [pendingGoogleAuth, setPendingGoogleAuth] = useState(null);
+  const [googleFirstName, setGoogleFirstName] = useState('');
+  const [googleLastName, setGoogleLastName] = useState('');
+  const [googlePassword, setGooglePassword] = useState('');
+  const [googleConfirmPassword, setGoogleConfirmPassword] = useState('');
   const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
 
@@ -29,7 +34,6 @@ const Login = () => {
       setServerError('');
       const response = await authApi.login(data);
       setAuth(response.user, response.accessToken);
-      navigate('/dashboard');
     } catch (error) {
       setServerError(error.response?.data?.message || 'Failed to login');
     }
@@ -39,10 +43,42 @@ const Login = () => {
     try {
       setServerError('');
       const response = await authApi.googleLogin({ credential: credentialResponse.credential });
+      
+      if (response.requiresPassword) {
+        setPendingGoogleAuth(response.googleData);
+        setGoogleFirstName('');
+        setGoogleLastName('');
+        return;
+      }
+      
       setAuth(response.user, response.accessToken);
-      navigate('/dashboard');
     } catch (error) {
       setServerError(error.response?.data?.message || 'Google authentication failed');
+    }
+  };
+
+  const handleCompleteGoogleAuth = async (e) => {
+    e.preventDefault();
+    if (googlePassword.length < 6) {
+      setServerError('Password must be at least 6 characters');
+      return;
+    }
+    if (googlePassword !== googleConfirmPassword) {
+      setServerError('Passwords do not match');
+      return;
+    }
+
+    try {
+      setServerError('');
+      const response = await authApi.googleRegister({
+        credential: pendingGoogleAuth.credential,
+        password: googlePassword,
+        firstName: googleFirstName,
+        lastName: googleLastName
+      });
+      setAuth(response.user, response.accessToken);
+    } catch (error) {
+      setServerError(error.response?.data?.message || 'Failed to complete Google registration');
     }
   };
 
@@ -71,57 +107,121 @@ const Login = () => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-neutral-darkBg mb-1">Email</label>
-              <Input 
-                type="email" 
-                placeholder="you@example.com" 
-                {...register('email')}
-                error={errors.email?.message}
-              />
-            </div>
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <label className="block text-sm font-medium text-neutral-darkBg">Password</label>
-                <Link to="/forgot-password" className="text-sm text-primary hover:underline">Forgot password?</Link>
+          {pendingGoogleAuth ? (
+            <div className="space-y-4">
+              <div className="p-4 bg-primary/10 rounded-xl border border-primary/20 flex items-center gap-4 mb-6">
+                <img src={pendingGoogleAuth.picture} alt="Avatar" className="w-12 h-12 rounded-full" />
+                <div>
+                  <p className="font-semibold text-neutral-darkBg">Hi, {pendingGoogleAuth.given_name}!</p>
+                  <p className="text-sm text-neutral">{pendingGoogleAuth.email}</p>
+                </div>
               </div>
-              <Input 
-                type="password" 
-                placeholder="••••••••" 
-                {...register('password')}
-                error={errors.password?.message}
-              />
+              <p className="text-sm text-neutral mb-4">You are almost there! Please set a password for your account to complete registration.</p>
+              
+              <form onSubmit={handleCompleteGoogleAuth} className="space-y-4">
+                <div className="flex gap-4">
+                  <div className="w-1/2">
+                    <label className="block text-sm font-medium text-neutral-darkBg mb-1">First Name</label>
+                    <Input 
+                      type="text" 
+                      placeholder="John" 
+                      value={googleFirstName}
+                      onChange={(e) => setGoogleFirstName(e.target.value)}
+                    />
+                  </div>
+                  <div className="w-1/2">
+                    <label className="block text-sm font-medium text-neutral-darkBg mb-1">Last Name</label>
+                    <Input 
+                      type="text" 
+                      placeholder="Doe" 
+                      value={googleLastName}
+                      onChange={(e) => setGoogleLastName(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-neutral-darkBg mb-1">Password</label>
+                  <Input 
+                    type="password" 
+                    placeholder="••••••••" 
+                    value={googlePassword}
+                    onChange={(e) => setGooglePassword(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-neutral-darkBg mb-1">Confirm Password</label>
+                  <Input 
+                    type="password" 
+                    placeholder="••••••••" 
+                    value={googleConfirmPassword}
+                    onChange={(e) => setGoogleConfirmPassword(e.target.value)}
+                  />
+                </div>
+                <div className="flex gap-3 pt-2">
+                  <Button type="button" variant="outline" className="w-1/3" onClick={() => {
+                    setPendingGoogleAuth(null);
+                    setGoogleFirstName('');
+                    setGoogleLastName('');
+                    setGooglePassword('');
+                    setGoogleConfirmPassword('');
+                  }}>Cancel</Button>
+                  <Button type="submit" className="w-2/3">Complete Registration</Button>
+                </div>
+              </form>
             </div>
-            
-            <Button type="submit" className="w-full mt-2" isLoading={isSubmitting}>
-              Sign In
-            </Button>
-          </form>
+          ) : (
+            <>
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" autoComplete="off">
+                <div>
+                  <label className="block text-sm font-medium text-neutral-darkBg mb-1">Email</label>
+                  <Input 
+                    type="email" 
+                    placeholder="you@example.com" 
+                    autoComplete="new-password"
+                    {...register('email')}
+                    error={errors.email?.message}
+                  />
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-1">
+                    <label className="block text-sm font-medium text-neutral-darkBg">Password</label>
+                    <Link to="/forgot-password" className="text-sm text-primary hover:underline">Forgot password?</Link>
+                  </div>
+                  <Input 
+                    type="password" 
+                    placeholder="••••••••" 
+                    autoComplete="new-password"
+                    {...register('password')}
+                    error={errors.password?.message}
+                  />
+                </div>
+                
+                <Button type="submit" className="w-full mt-2" isLoading={isSubmitting}>
+                  Sign In
+                </Button>
+              </form>
 
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-neutral/20"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-neutral-lightBg text-neutral">Or continue with</span>
-            </div>
-          </div>
-          
-          <div className="flex justify-center">
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={() => setServerError('Google Sign-In failed')}
-              useOneTap
-            />
-          </div>
+              <div className="flex items-center my-6">
+                <div className="flex-grow border-t border-neutral/20"></div>
+                <span className="px-3 text-sm text-neutral">Or continue with</span>
+                <div className="flex-grow border-t border-neutral/20"></div>
+              </div>
+              
+              <div className="flex justify-center">
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={(err) => console.log('Google Sign-In prompt closed or failed', err)}
+                />
+              </div>
 
-          <p className="mt-8 text-center text-sm text-neutral">
-            Don't have an account?{' '}
-            <Link to="/register" className="font-medium text-primary hover:underline">
-              Create an account
-            </Link>
-          </p>
+              <p className="mt-8 text-center text-sm text-neutral">
+                Don't have an account?{' '}
+                <Link to="/register" replace className="font-medium text-primary hover:underline">
+                  Create an account
+                </Link>
+              </p>
+            </>
+          )}
         </motion.div>
       </div>
 

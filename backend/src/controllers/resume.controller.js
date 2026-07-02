@@ -1,11 +1,9 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const pdf = require('pdf-parse');
-
+import { PDFParse } from 'pdf-parse';
 import Resume from '../models/Resume.model.js';
 import User from '../models/User.model.js';
 import { uploadBufferToCloudinary } from '../utils/cloudinary.utils.js';
 import { extractKeywords } from '../utils/atsAnalyzer.utils.js';
+import { extractTechnicalSkills } from '../ai/ai.service.js';
 import { v2 as cloudinary } from 'cloudinary';
 
 // @desc    Upload a new resume (PDF)
@@ -18,11 +16,15 @@ export const uploadResume = async (req, res) => {
     }
 
     // 1. Parse PDF text from buffer
-    const pdfData = await pdf(req.file.buffer);
-    const parsedText = pdfData.text;
+    const parser = new PDFParse({ data: req.file.buffer });
+    const textResult = await parser.getText();
+    const parsedText = textResult.text;
 
-    // 2. Extract Keywords
-    const extractedKeywords = extractKeywords(parsedText);
+    // 2. Extract Keywords (use AI for precision, fallback to basic if fails/no key)
+    let extractedKeywords = await extractTechnicalSkills(parsedText);
+    if (!extractedKeywords || extractedKeywords.length === 0) {
+      extractedKeywords = extractKeywords(parsedText);
+    }
 
     // 3. Upload to Cloudinary
     const cloudinaryResult = await uploadBufferToCloudinary(req.file.buffer);
@@ -52,5 +54,27 @@ export const getMyResumes = async (req, res) => {
     res.status(200).json({ success: true, resumes });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server error fetching resumes' });
+  }
+};
+
+// @desc    Delete a resume
+// @route   DELETE /api/resumes/:id
+// @access  Private
+export const deleteResume = async (req, res) => {
+  try {
+    const resume = await Resume.findOne({ _id: req.params.id, user: req.user.id });
+    
+    if (!resume) {
+      return res.status(404).json({ success: false, message: 'Resume not found' });
+    }
+
+    // Optional: Delete from Cloudinary if needed, skipping for now to prevent accidental deletion of shared assets or simplify logic
+    // const publicId = resume.fileUrl.split('/').pop().split('.')[0];
+    // await cloudinary.uploader.destroy(`prepflow/resumes/${publicId}`);
+
+    await resume.deleteOne();
+    res.status(200).json({ success: true, message: 'Resume deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error deleting resume' });
   }
 };

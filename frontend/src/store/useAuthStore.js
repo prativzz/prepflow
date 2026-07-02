@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { authApi } from '../api/auth.api';
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -15,12 +16,19 @@ export const useAuthStore = create((set) => ({
   
   setAccessToken: (accessToken) => set({ accessToken }),
   
-  logout: () => set({ 
-    user: null, 
-    accessToken: null, 
-    isAuthenticated: false,
-    isLoading: false
-  }),
+  logout: async () => {
+    try {
+      await authApi.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+    set({ 
+      user: null, 
+      accessToken: null, 
+      isAuthenticated: false,
+      isLoading: false
+    });
+  },
   
   setLoading: (isLoading) => set({ isLoading }),
 }));

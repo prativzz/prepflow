@@ -3,8 +3,28 @@ import { useAuthStore } from '../store/useAuthStore';
 import { Button } from '../components/ui/Button';
 import { useNavigate, Link } from 'react-router-dom';
 import { analyticsApi } from '../api/analytics.api';
-import { ProgressCircle } from '../components/ui/ProgressCircle';
 import { motion } from 'framer-motion';
+
+const TwoToneCrown = ({ leftColor, rightColor, className }) => (
+  <svg viewBox="0 0 100 80" className={className} xmlns="http://www.w3.org/2000/svg">
+    {/* Base Left */}
+    <path d="M15 72 L50 72 L50 78 L19 78 Q15 78 15 74 Z" fill={leftColor} />
+    {/* Base Right */}
+    <path d="M50 72 L85 72 L85 74 Q85 78 81 78 L50 78 Z" fill={rightColor} />
+    
+    {/* Left Body */}
+    <path d="M12 30 L31 55 L50 20 L50 70 L17 70 Z" fill={leftColor} />
+    
+    {/* Right Body */}
+    <path d="M50 20 L69 55 L88 30 L83 70 L50 70 Z" fill={rightColor} />
+
+    {/* Dots */}
+    <circle cx="12" cy="27" r="4" fill={leftColor} />
+    <path d="M50 13 A 4 4 0 0 0 50 21 Z" fill={leftColor} />
+    <path d="M50 13 A 4 4 0 0 1 50 21 Z" fill={rightColor} />
+    <circle cx="88" cy="27" r="4" fill={rightColor} />
+  </svg>
+);
 
 const Dashboard = () => {
   const { user } = useAuthStore();
@@ -43,6 +63,15 @@ const Dashboard = () => {
     };
     fetchAnalytics();
   }, []);
+
+  const getRankInfo = (current) => {
+    if (current < 10) return { name: 'Bronze', leftColor: '#e08f62', rightColor: '#8a503a', textColor: 'text-[#8a503a]', bar: 'bg-[#e08f62]', next: 10, nextName: 'Silver' };
+    if (current < 20) return { name: 'Silver', leftColor: '#cfd4d8', rightColor: '#a7b1b8', textColor: 'text-[#a7b1b8]', bar: 'bg-[#cfd4d8]', next: 20, nextName: 'Gold' };
+    if (current < 30) return { name: 'Gold', leftColor: '#f9bb00', rightColor: '#e59a00', textColor: 'text-[#e59a00]', bar: 'bg-[#f9bb00]', next: 30, nextName: 'Diamond' };
+    return { name: 'Diamond', leftColor: '#4dd0e1', rightColor: '#00acc1', textColor: 'text-[#00acc1]', bar: 'bg-[#4dd0e1]', next: null, nextName: null };
+  };
+
+  const rank = stats ? getRankInfo(stats.totalInterviews) : getRankInfo(0);
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -149,13 +178,21 @@ const Dashboard = () => {
                     </div>
                     <div className="flex items-center gap-6">
                       <div className="text-right">
-                        <div className="text-sm text-neutral font-medium mb-1">Score</div>
-                        <div className={`text-xl font-bold ${session.overallScore >= 80 ? 'text-emerald-500' : session.overallScore >= 60 ? 'text-orange-500' : 'text-red-500'}`}>
-                          {session.overallScore || 0}%
+                        <div className="text-sm mb-1">
+                          {session.status === 'completed' ? (
+                            <span className="text-emerald-500 font-semibold uppercase text-xs">Completed</span>
+                          ) : (
+                            <span className="text-blue-500 font-semibold uppercase text-xs">Not Completed</span>
+                          )}
                         </div>
+                        {session.status === 'completed' && (
+                          <div className={`text-xl font-bold ${session.overallScore >= 80 ? 'text-emerald-500' : session.overallScore >= 60 ? 'text-orange-500' : 'text-neutral-darkBg'}`}>
+                            {session.overallScore || 0}%
+                          </div>
+                        )}
                       </div>
-                      <Link to={`/interview/${session._id}/feedback`}>
-                        <Button variant="outline" size="sm">Review</Button>
+                      <Link to={session.status === 'completed' ? `/interview/${session._id}/feedback` : '#'}>
+                        <Button variant="outline" size="sm" disabled={session.status !== 'completed'}>Review</Button>
                       </Link>
                     </div>
                   </motion.li>
@@ -177,14 +214,42 @@ const Dashboard = () => {
           </div>
 
           <div className="bg-white rounded-2xl p-6 border border-neutral/20 shadow-sm">
-            <h3 className="font-bold text-lg text-neutral-darkBg mb-4">Prep Progress</h3>
+            <h3 className="font-bold text-lg text-neutral-darkBg mb-4">Your Rank</h3>
             {!isLoading && stats && (
-              <div className="flex justify-center my-6">
-                 <ProgressCircle percentage={Math.min(100, Math.round((stats.totalInterviews / 10) * 100))} size={140} strokeWidth={12} />
+              <div className="flex flex-col items-center my-4">
+                <div className="flex flex-col items-center justify-center p-2 mb-2">
+                  <motion.div 
+                    initial={{ scale: 0, y: 10 }}
+                    animate={{ scale: 1, y: 0 }}
+                    whileHover={{ scale: 1.1, y: -4 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    <TwoToneCrown leftColor={rank.leftColor} rightColor={rank.rightColor} className="w-24 h-24 filter drop-shadow-md hover:drop-shadow-xl transition-all duration-300" />
+                  </motion.div>
+                </div>
+                
+                {rank.next ? (
+                  <div className="mt-2 w-full px-2">
+                    <div className="flex justify-between text-xs font-medium text-neutral-darkBg mb-2">
+                      <span>{stats.totalInterviews} Interviews</span>
+                      <span>{rank.next} for {rank.nextName}</span>
+                    </div>
+                    <div className="w-full bg-neutral-light rounded-full h-2 overflow-hidden shadow-inner">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: `${Math.min(100, (stats.totalInterviews / rank.next) * 100)}%` }}
+                        transition={{ duration: 1, ease: "easeOut" }}
+                        className={`h-2 rounded-full ${rank.bar}`} 
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-2 text-sm font-bold text-primary">Max Rank Achieved!</div>
+                )}
               </div>
             )}
-            <p className="text-sm text-center text-neutral">
-              Complete {Math.max(0, 10 - (stats?.totalInterviews || 0))} more mock interviews to master your delivery.
+            <p className="text-sm text-center text-neutral mt-2">
+              Climb the ranks by practicing more interviews.
             </p>
           </div>
         </div>

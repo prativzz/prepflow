@@ -1,6 +1,7 @@
 import JobDescription from '../models/JobDescription.model.js';
 import Resume from '../models/Resume.model.js';
 import { extractKeywords, analyzeATS } from '../utils/atsAnalyzer.utils.js';
+import { evaluateATS } from '../ai/ai.service.js';
 
 // @desc    Save a new Job Description
 // @route   POST /api/jobs
@@ -60,7 +61,7 @@ export const analyzeATSMatch = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Resume or Job Description not found' });
     }
 
-    const analysis = analyzeATS(resume.extractedKeywords, job.extractedKeywords);
+    const analysis = await evaluateATS(resume.parsedText, job.content);
 
     res.status(200).json({
       success: true,

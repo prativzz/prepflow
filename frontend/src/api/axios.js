@@ -27,7 +27,12 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     
     // If error is 401 and we haven't retried yet
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Skip intercepting for login, register, and logout routes to prevent infinite loops
+    const isAuthRoute = originalRequest.url.includes('/auth/login') || 
+                        originalRequest.url.includes('/auth/register') ||
+                        originalRequest.url.includes('/auth/logout');
+    
+    if (error.response?.status === 401 && !originalRequest._retry && !isAuthRoute) {
       originalRequest._retry = true;
       
       try {

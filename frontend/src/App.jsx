@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useAuthStore } from './store/useAuthStore';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
 import Dashboard from './pages/Dashboard';
 import ResumeAnalysis from './pages/ResumeAnalysis';
 import ATSAnalysis from './pages/ATSAnalysis';
@@ -11,6 +12,7 @@ import InterviewRoom from './pages/InterviewRoom';
 import InterviewFeedback from './pages/InterviewFeedback';
 import LandingPage from './pages/LandingPage';
 import ProtectedRoute from './components/layout/ProtectedRoute';
+import PublicOnlyRoute from './components/layout/PublicOnlyRoute';
 import { MainLayout } from './components/layout/MainLayout';
 
 import { authApi } from './api/auth.api';
@@ -22,7 +24,8 @@ function App() {
     const checkAuth = async () => {
       try {
         const response = await authApi.getMe();
-        setAuth(response.user, null);
+        const currentToken = useAuthStore.getState().accessToken;
+        setAuth(response.user, currentToken);
       } catch (error) {
         setAuth(null, null);
       }
@@ -44,8 +47,12 @@ function App() {
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {/* Public-only Routes (redirect to dashboard if logged in) */}
+        <Route element={<PublicOnlyRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+        </Route>
 
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>

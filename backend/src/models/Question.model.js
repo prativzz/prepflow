@@ -9,7 +9,7 @@ const questionSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ['behavioral', 'technical', 'resume-based', 'project-based', 'situational'],
+      enum: ['behavioral', 'technical', 'resume-based', 'project-based', 'situational', 'technical-coding'],
       required: true,
     },
     content: {

@@ -24,5 +24,20 @@ export const authApi = {
   getMe: async () => {
     const response = await api.get('/auth/me');
     return response.data;
+  },
+  
+  googleRegister: async (data) => {
+    const response = await api.post('/auth/google-register', data);
+    return response.data;
+  },
+  
+  updateProfile: async (data) => {
+    const response = await api.put('/auth/profile', data);
+    return response.data;
+  },
+  
+  updatePassword: async (data) => {
+    const response = await api.put('/auth/password', data);
+    return response.data;
   }
 };

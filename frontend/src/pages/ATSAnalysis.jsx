@@ -66,9 +66,6 @@ const ATSAnalysis = () => {
             <h1 className="text-3xl font-bold text-neutral-darkBg">ATS Match Analyzer</h1>
             <p className="text-neutral mt-1">Compare your resume against a job description.</p>
           </div>
-          <Link to="/dashboard">
-            <Button variant="outline">Back to Dashboard</Button>
-          </Link>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -78,7 +75,7 @@ const ATSAnalysis = () => {
               <h2 className="text-xl font-semibold mb-4 text-neutral-darkBg">1. Select Resume</h2>
               {resumes.length === 0 ? (
                 <div className="p-4 bg-orange-50 text-orange-600 rounded-md text-sm border border-orange-200">
-                  You haven't uploaded any resumes yet. <Link to="/resume" className="underline font-semibold">Upload one here</Link>.
+                  You haven't uploaded any resumes yet. <Link to="/resumes" className="underline font-semibold">Upload one here</Link>.
                 </div>
               ) : (
                 <select 
@@ -194,7 +191,7 @@ const ATSAnalysis = () => {
                 <div className="bg-primary/5 p-4 rounded-lg border border-primary/20">
                   <h4 className="font-medium text-primary-dark mb-2">Pro Tip</h4>
                   <p className="text-sm text-neutral-darkBg">
-                    Don't just randomly insert these keywords. Try to naturally incorporate them into your bullet points, demonstrating how you used these skills to achieve tangible results.
+                    {analysisResult.proTip || "Don't just randomly insert these keywords. Try to naturally incorporate them into your bullet points, demonstrating how you used these skills to achieve tangible results."}
                   </p>
                 </div>
               </motion.div>

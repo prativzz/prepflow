@@ -106,6 +106,19 @@ const InterviewRoom = () => {
     }
   };
 
+  const handleEndEarly = async () => {
+    if (window.confirm("Are you sure you want to end this interview early? Your progress will not be saved.")) {
+      try {
+        setIsSubmitting(true);
+        await interviewApi.endInterviewEarly(id);
+        navigate('/dashboard');
+      } catch (err) {
+        console.error(err);
+        setIsSubmitting(false);
+      }
+    }
+  };
+
   if (interviewCompleted) {
     return (
       <div className="min-h-screen bg-neutral-darkBg text-white flex flex-col items-center justify-center p-8 text-center">
@@ -182,6 +195,14 @@ const InterviewRoom = () => {
                 )}
               </svg>
             </button>
+            <Button 
+              size="lg" 
+              onClick={handleEndEarly} 
+              disabled={isSubmitting}
+              className="px-6 border border-red-500 text-red-500 hover:bg-red-500/10 bg-transparent"
+            >
+              End Interview
+            </Button>
             <Button 
               size="lg" 
               onClick={handleNext} 

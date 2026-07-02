@@ -7,16 +7,18 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/prepfl
 
 const startServer = async () => {
   try {
-    await mongoose.connect(MONGODB_URI);
-    console.log('✅ Connected to MongoDB');
-    
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
-    });
+    console.log('Attempting to connect to MongoDB...');
+    await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+    console.log('✅ Connected to MongoDB Successfully!');
   } catch (error) {
-    console.error('❌ Failed to start server:', error);
+    console.error('❌ FATAL: Failed to connect to MongoDB!', error.message);
+    console.error('👉 If you are using MongoDB Atlas, please ensure your current IP address is whitelisted in the Network Access settings.');
     process.exit(1);
   }
+
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+  });
 };
 
 startServer();

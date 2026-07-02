@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Button } from '../ui/Button';
+import { Settings } from 'lucide-react';
+import { SettingsModal } from './SettingsModal';
 
 export const Sidebar = () => {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const handleLogout = async () => {
     await logout();
     navigate('/login');
   };
+
+  const displayName = user?.name || 
+    (user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : null) || 
+    user?.firstName || 
+    'User';
 
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
@@ -48,18 +56,27 @@ export const Sidebar = () => {
 
       <div className="p-4 border-t border-neutral/10">
         <div className="flex items-center gap-3 mb-4 px-2">
-          <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
-            {user?.name?.charAt(0).toUpperCase()}
+          <div className="w-10 h-10 shrink-0 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-lg shadow-sm">
+            {(displayName !== 'User' ? displayName : (user?.email || '?')).charAt(0).toUpperCase()}
           </div>
-          <div className="overflow-hidden">
-            <p className="text-sm font-medium text-neutral-darkBg truncate">{user?.name}</p>
+          <div className="overflow-hidden flex-1">
+            <p className="text-sm font-medium text-neutral-darkBg truncate">{displayName}</p>
             <p className="text-xs text-neutral truncate">{user?.email}</p>
           </div>
+          <button 
+            onClick={() => setIsSettingsOpen(true)}
+            className="p-1.5 text-neutral hover:text-primary hover:bg-primary/10 rounded-md transition-colors shrink-0"
+            title="Settings"
+          >
+            <Settings size={18} />
+          </button>
         </div>
         <Button variant="outline" className="w-full text-red-500 border-red-200 hover:bg-red-50" onClick={handleLogout}>
           Logout
         </Button>
       </div>
+      
+      <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </div>
   );
 };

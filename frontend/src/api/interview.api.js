@@ -24,5 +24,10 @@ export const interviewApi = {
   getFeedback: async (sessionId) => {
     const response = await api.get(`/interviews/${sessionId}/feedback`);
     return response.data;
+  },
+
+  endInterviewEarly: async (sessionId) => {
+    const response = await api.post(`/interviews/${sessionId}/end-early`);
+    return response.data;
   }
 };

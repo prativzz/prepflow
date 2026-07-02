@@ -16,5 +16,10 @@ export const resumeApi = {
   getMyResumes: async () => {
     const response = await api.get('/resumes');
     return response.data;
+  },
+  
+  deleteResume: async (id) => {
+    const response = await api.delete(`/resumes/${id}`);
+    return response.data;
   }
 };

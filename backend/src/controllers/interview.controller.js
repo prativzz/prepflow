@@ -141,3 +141,29 @@ export const getFeedback = async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to fetch feedback' });
   }
 };
+
+// @desc    End Session Early (Incomplete)
+// @route   POST /api/interviews/:id/end-early
+// @access  Private
+export const endSessionEarly = async (req, res) => {
+  try {
+    const session = await InterviewSession.findOne({ _id: req.params.id, user: req.user.id });
+    
+    if (!session) {
+      return res.status(404).json({ success: false, message: 'Session not found' });
+    }
+
+    if (session.status !== 'in-progress') {
+      return res.status(400).json({ success: false, message: 'Session is already completed or ended' });
+    }
+
+    session.status = 'incomplete';
+    session.completedAt = Date.now();
+    await session.save();
+
+    res.status(200).json({ success: true, message: 'Interview ended early' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to end interview early' });
+  }
+};

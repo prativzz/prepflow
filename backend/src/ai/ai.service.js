@@ -12,6 +12,25 @@ const getGenAI = () => {
   return null;
 };
 
+// Helper to safely parse JSON from LLM that might wrap in markdown
+const parseJSONStr = (str) => {
+  try {
+    let cleanStr = str.trim();
+    if (cleanStr.startsWith('```json')) {
+      cleanStr = cleanStr.substring(7);
+    } else if (cleanStr.startsWith('```')) {
+      cleanStr = cleanStr.substring(3);
+    }
+    if (cleanStr.endsWith('```')) {
+      cleanStr = cleanStr.substring(0, cleanStr.length - 3);
+    }
+    return JSON.parse(cleanStr.trim());
+  } catch (err) {
+    console.error("JSON parsing failed for string:", str);
+    throw err;
+  }
+};
+
 /**
  * Generates questions using Google Gemini API.
  */
@@ -47,7 +66,7 @@ export const generateQuestions = async (resume, job, difficultyLevel, numQuestio
     `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-flash-latest',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
@@ -55,7 +74,7 @@ export const generateQuestions = async (resume, job, difficultyLevel, numQuestio
     });
 
     const text = response.text || response.candidates[0].content.parts[0].text;
-    const questionsArray = JSON.parse(text);
+    const questionsArray = parseJSONStr(text);
     return questionsArray;
   } catch (error) {
     console.error("Error generating questions with Gemini:", error);
@@ -99,7 +118,7 @@ export const analyzeSession = async (session, questions) => {
       `;
 
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-flash-latest',
         contents: prompt,
         config: {
           responseMimeType: 'application/json',
@@ -107,7 +126,7 @@ export const analyzeSession = async (session, questions) => {
       });
 
       const text = response.text || response.candidates[0].content.parts[0].text;
-      const feedback = JSON.parse(text);
+      const feedback = parseJSONStr(text);
       
       q.feedback = feedback;
       totalScore += feedback.score;
@@ -122,7 +141,7 @@ export const analyzeSession = async (session, questions) => {
       Provide a brief (2-3 sentences), encouraging, and constructive overall summary of their performance.
     `;
     const summaryResponse = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-flash-latest',
       contents: summaryPrompt
     });
 
@@ -136,6 +155,109 @@ export const analyzeSession = async (session, questions) => {
   }
 };
 
+
+/**
+ * Evaluates the ATS compatibility between a resume and a job description.
+ */
+export const evaluateATS = async (resumeText, jobText) => {
+  const ai = getGenAI();
+
+  if (!ai) {
+    console.warn("⚠️ GEMINI_API_KEY is not set. Falling back to Mock ATS Evaluator.");
+    // Provide a slightly better mock than the old utility
+    return {
+      score: 45,
+      missingKeywords: ['JavaScript', 'React', 'Node.js'],
+      proTip: "Try to incorporate more specific technical skills mentioned in the job description."
+    };
+  }
+
+  try {
+    const prompt = `
+      You are an expert Applicant Tracking System (ATS). 
+      Your task is to compare the provided Resume against the provided Job Description.
+      
+      Job Description:
+      ${jobText}
+      
+      Resume:
+      ${resumeText}
+      
+      Instructions:
+      1. Extract the true technical and professional skills, frameworks, and tools required from the Job Description. Ignore stop words, generic verbs (want, work, build), and overly broad terms.
+      2. Check which of these extracted skills are missing from the Resume.
+      3. Calculate a match score from 0 to 100 based on how well the candidate's skills align with the required skills.
+      4. Write a brief, personalized "proTip" (1-2 sentences) advising the candidate on how to improve their resume for this specific role.
+      
+      Format your response strictly as a JSON object with exactly these keys:
+      - "score" (number: 0 to 100)
+      - "missingKeywords" (array of strings: actual professional skills/nouns missing)
+      - "proTip" (string: personalized advice)
+      
+      Do NOT include markdown block formatting (like \`\`\`json) in the response, just the raw JSON object.
+    `;
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-flash-latest',
+      contents: prompt,
+      config: {
+        responseMimeType: 'application/json',
+      }
+    });
+
+    const text = response.text || response.candidates[0].content.parts[0].text;
+    const evaluation = parseJSONStr(text);
+    return evaluation;
+  } catch (error) {
+    console.error("Error evaluating ATS with Gemini:", error);
+    return {
+      score: 0,
+      missingKeywords: [],
+      proTip: "An error occurred while evaluating your ATS score. Please try again."
+    };
+  }
+};
+
+
+/**
+ * Extracts pure technical skills from a document (Resume or JD).
+ */
+export const extractTechnicalSkills = async (text) => {
+  const ai = getGenAI();
+
+  if (!ai) {
+    console.warn("⚠️ GEMINI_API_KEY is not set. Falling back to simple keyword extraction.");
+    return null;
+  }
+
+  try {
+    const prompt = `
+      You are an expert technical recruiter. Extract ONLY the professional technical skills, programming languages, tools, frameworks, and methodologies from the following text.
+      Do NOT include names, phone numbers, addresses, emails, dates, numbers, or generic soft skills (like "leadership", "communication").
+      
+      Text:
+      ${text}
+      
+      Format your response strictly as a JSON array of strings. Each string should be a distinct technical skill.
+      Do NOT include markdown block formatting (like \`\`\`json) in the response, just the raw JSON array.
+    `;
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-flash-latest',
+      contents: prompt,
+      config: {
+        responseMimeType: 'application/json',
+      }
+    });
+
+    const responseText = response.text || response.candidates[0].content.parts[0].text;
+    const skills = parseJSONStr(responseText);
+    return Array.isArray(skills) ? skills : [];
+  } catch (error) {
+    console.error("Error extracting technical skills with Gemini:", error);
+    return null;
+  }
+};
 
 // -------------------------------------------------------------
 // MOCK FALLBACKS (If API key is missing)
