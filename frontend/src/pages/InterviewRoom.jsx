@@ -151,8 +151,8 @@ const InterviewRoom = () => {
         {/* Main Workspace (Video + Optional Code) */}
         <div className="w-full lg:w-2/3 flex flex-col gap-4">
           
-          <div className={`flex gap-4 w-full h-[500px] ${isCodingQuestion ? 'flex-row' : 'flex-col'}`}>
-            <div className={`relative bg-black rounded-xl overflow-hidden shadow-2xl border border-white/10 transition-all duration-300 ${isCodingQuestion ? 'w-1/3' : 'w-full h-full'}`}>
+          <div className={`flex gap-4 w-full h-[600px] md:h-[500px] ${isCodingQuestion ? 'flex-col md:flex-row' : 'flex-col'}`}>
+            <div className={`relative bg-black rounded-xl overflow-hidden shadow-2xl border border-white/10 transition-all duration-300 ${isCodingQuestion ? 'w-full h-[250px] md:h-full md:w-1/3 shrink-0' : 'w-full h-full'}`}>
               {webcamError ? (
                 <div className="absolute inset-0 flex items-center justify-center text-red-400 p-4 text-center text-sm">
                   {webcamError}
@@ -172,7 +172,7 @@ const InterviewRoom = () => {
             </div>
 
             {isCodingQuestion && (
-              <div className="w-2/3 h-full">
+              <div className="w-full md:w-2/3 h-full overflow-hidden rounded-xl">
                 <CodeEditor code={code} setCode={setCode} language="javascript" />
               </div>
             )}

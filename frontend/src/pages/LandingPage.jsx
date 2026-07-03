@@ -20,7 +20,7 @@ const LandingPage = () => {
       </header>
       <main className="flex-1 flex flex-col items-center justify-center p-6 text-center mt-20">
         <div className="max-w-2xl space-y-6">
-          <h1 className="text-5xl font-extrabold tracking-tight text-neutral-darkBg">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-darkBg">
             Master Interviews. <span className="text-primary">Land Offers.</span>
           </h1>
           <p className="text-lg text-neutral leading-relaxed">

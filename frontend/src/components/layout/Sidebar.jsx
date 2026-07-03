@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Button } from '../ui/Button';
-import { Settings } from 'lucide-react';
+import { Settings, X } from 'lucide-react';
 import { SettingsModal } from './SettingsModal';
 
-export const Sidebar = () => {
+export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -28,9 +28,21 @@ export const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 bg-white border-r border-neutral/20 h-screen flex flex-col fixed left-0 top-0">
-      <div className="p-6 border-b border-neutral/10">
+    <>
+      {/* Mobile overlay backdrop */}
+      {isMobileOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden" 
+          onClick={() => setIsMobileOpen(false)}
+        />
+      )}
+      
+      <div className={`w-64 bg-white border-r border-neutral/20 h-screen flex flex-col fixed left-0 top-0 z-50 transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="p-6 border-b border-neutral/10 flex justify-between items-center">
         <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">PrepFlow</h1>
+        <button onClick={() => setIsMobileOpen(false)} className="md:hidden text-neutral hover:text-neutral-darkBg">
+          <X size={24} />
+        </button>
       </div>
       
       <nav className="flex-1 p-4 space-y-2">
@@ -78,5 +90,6 @@ export const Sidebar = () => {
       
       <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </div>
+    </>
   );
 };
