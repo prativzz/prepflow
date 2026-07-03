@@ -32,14 +32,9 @@ const LandingPage = () => {
                 Go to Dashboard
               </Link>
             ) : (
-              <>
-                <Link to="/register" className="px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark hover:-translate-y-0.5 transition-all shadow-md">
-                  Start Practicing
-                </Link>
-                <Link to="/login" className="px-8 py-3 bg-white text-neutral-darkBg font-semibold rounded-lg border border-neutral/20 hover:bg-neutral-light transition-all shadow-sm">
-                  See Demo
-                </Link>
-              </>
+              <Link to="/register" className="px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark hover:-translate-y-0.5 transition-all shadow-md">
+                Start Practicing
+              </Link>
             )}
           </div>
         </div>
