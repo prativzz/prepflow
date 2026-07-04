@@ -143,7 +143,7 @@ const Dashboard = () => {
              <motion.div className="absolute top-0 left-0 w-1 h-full bg-blue-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Interviews Completed</h3>
-             <AnimatedCounter value={stats.totalInterviews} className="text-4xl font-bold text-neutral-darkBg dark:text-white relative z-10 block" />
+             <AnimatedCounter value={stats?.totalInterviews || 0} className="text-4xl font-bold text-neutral-darkBg dark:text-white relative z-10 block" />
              <p className="text-xs text-neutral mt-2 relative z-10">Mock sessions</p>
           </motion.div>
           
@@ -152,7 +152,7 @@ const Dashboard = () => {
              <div className="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Average Score</h3>
              <div className="flex items-end gap-2 relative z-10">
-               <AnimatedCounter value={stats.averageScore} className="text-4xl font-bold text-neutral-darkBg dark:text-white block" />
+               <AnimatedCounter value={stats?.averageScore || 0} className="text-4xl font-bold text-neutral-darkBg dark:text-white block" />
                <span className="text-lg text-neutral font-medium mb-1">%</span>
              </div>
              <p className="text-xs text-neutral mt-2 relative z-10">Across all sessions</p>
@@ -163,7 +163,7 @@ const Dashboard = () => {
              <div className="absolute inset-0 bg-purple-500/0 group-hover:bg-purple-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Highest Score</h3>
              <div className="flex items-end gap-2 relative z-10">
-               <AnimatedCounter value={stats.highestScore} className="text-4xl font-bold text-neutral-darkBg dark:text-white block" />
+               <AnimatedCounter value={stats?.highestScore || 0} className="text-4xl font-bold text-neutral-darkBg dark:text-white block" />
                <span className="text-lg text-neutral font-medium mb-1">%</span>
              </div>
              <p className="text-xs text-neutral mt-2 relative z-10">Personal best</p>
@@ -173,7 +173,7 @@ const Dashboard = () => {
              <motion.div className="absolute top-0 left-0 w-1 h-full bg-orange-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Resumes Uploaded</h3>
-             <AnimatedCounter value={stats.totalResumes} className="text-4xl font-bold text-neutral-darkBg dark:text-white block relative z-10" />
+             <AnimatedCounter value={stats?.totalResumes || 0} className="text-4xl font-bold text-neutral-darkBg dark:text-white block relative z-10" />
              <p className="text-xs text-neutral mt-2 relative z-10">In your repository</p>
           </motion.div>
         </motion.div>
@@ -282,13 +282,13 @@ const Dashboard = () => {
                 {rank.next ? (
                   <div className="mt-2 w-full px-2">
                     <div className="flex justify-between text-xs font-medium text-neutral-darkBg dark:text-white mb-2">
-                      <span>{stats.totalInterviews} Interviews</span>
+                      <span>{stats?.totalInterviews || 0} Interviews</span>
                       <span>{rank.next} for {rank.nextName}</span>
                     </div>
                     <div className="w-full bg-neutral-light rounded-full h-2 overflow-hidden shadow-inner">
                       <motion.div 
                         initial={{ width: 0 }}
-                        animate={{ width: `${Math.min(100, (stats.totalInterviews / rank.next) * 100)}%` }}
+                        animate={{ width: `${Math.min(100, ((stats?.totalInterviews || 0) / rank.next) * 100)}%` }}
                         transition={{ duration: 1, ease: "easeOut" }}
                         className={`h-2 rounded-full ${rank.bar}`} 
                       />
