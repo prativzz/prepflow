@@ -68,7 +68,7 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
           >
             {({ isActive }) => (
               <motion.div
-                className={`relative flex items-center gap-3 px-4 py-3 rounded-[12px] cursor-pointer overflow-hidden ${
+                className={`relative flex items-center gap-3 px-4 py-3 rounded-[12px] cursor-pointer ${
                   isActive 
                     ? 'text-primary font-medium' 
                     : 'text-neutral hover:text-neutral-darkBg dark:text-neutral-textSecondary dark:hover:text-white dark:hover:drop-shadow-md'
