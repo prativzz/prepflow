@@ -140,7 +140,7 @@ const Dashboard = () => {
           animate="show"
         >
           <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-neutral-darkCard dark:hover:bg-neutral-darkCardSecondary p-6 rounded-[18px] border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient hover:shadow-md dark:hover:shadow-ambient-hover transition-all duration-300 relative overflow-hidden group cursor-default">
-             <motion.div className="absolute top-0 left-0 w-1 h-full bg-blue-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
+             <motion.div className="absolute top-0 left-0 w-1 h-full bg-blue-500 origin-bottom shadow-[2px_0_8px_rgba(59,130,246,0.6)]" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Interviews Completed</h3>
              <AnimatedCounter value={stats?.totalInterviews || 0} className="text-4xl font-bold text-neutral-darkBg dark:text-white relative z-10 block" />
@@ -148,7 +148,7 @@ const Dashboard = () => {
           </motion.div>
           
           <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-neutral-darkCard dark:hover:bg-neutral-darkCardSecondary p-6 rounded-[18px] border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient hover:shadow-md dark:hover:shadow-ambient-hover transition-all duration-300 relative overflow-hidden group cursor-default">
-             <motion.div className="absolute top-0 left-0 w-1 h-full bg-emerald-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
+             <motion.div className="absolute top-0 left-0 w-1 h-full bg-emerald-500 origin-bottom shadow-[2px_0_8px_rgba(16,185,129,0.6)]" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Average Score</h3>
              <div className="flex items-end gap-2 relative z-10">
@@ -159,7 +159,7 @@ const Dashboard = () => {
           </motion.div>
           
           <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-neutral-darkCard dark:hover:bg-neutral-darkCardSecondary p-6 rounded-[18px] border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient hover:shadow-md dark:hover:shadow-ambient-hover transition-all duration-300 relative overflow-hidden group cursor-default">
-             <motion.div className="absolute top-0 left-0 w-1 h-full bg-purple-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
+             <motion.div className="absolute top-0 left-0 w-1 h-full bg-purple-500 origin-bottom shadow-[2px_0_8px_rgba(168,85,247,0.6)]" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-purple-500/0 group-hover:bg-purple-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Highest Score</h3>
              <div className="flex items-end gap-2 relative z-10">
@@ -170,7 +170,7 @@ const Dashboard = () => {
           </motion.div>
           
           <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-neutral-darkCard dark:hover:bg-neutral-darkCardSecondary p-6 rounded-[18px] border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient hover:shadow-md dark:hover:shadow-ambient-hover transition-all duration-300 relative overflow-hidden group cursor-default">
-             <motion.div className="absolute top-0 left-0 w-1 h-full bg-orange-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
+             <motion.div className="absolute top-0 left-0 w-1 h-full bg-orange-500 origin-bottom shadow-[2px_0_8px_rgba(249,115,22,0.6)]" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Resumes Uploaded</h3>
              <AnimatedCounter value={stats?.totalResumes || 0} className="text-4xl font-bold text-neutral-darkBg dark:text-white block relative z-10" />
