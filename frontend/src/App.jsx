@@ -45,7 +45,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen font-sans text-neutral-darkBg bg-neutral-light">
+    <div className="min-h-screen font-sans text-neutral-darkBg bg-neutral-light dark:bg-neutral-darkBg dark:text-neutral-textPrimary transition-colors duration-300">
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           {/* Public Routes */}
