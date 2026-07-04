@@ -9,27 +9,65 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#3b82f6', // blue-500
-          dark: '#2563eb',    // blue-600
+          DEFAULT: '#4F8CFF', // Blue Accent
+          dark: '#3b82f6',
+          light: '#60a5fa',
         },
         secondary: {
-          DEFAULT: '#a855f7', // purple-500
-          dark: '#9333ea',    // purple-600
+          DEFAULT: '#8B5CF6', // Purple Accent
+          dark: '#7c3aed',
         },
+        success: { DEFAULT: '#22C55E' },
+        warning: { DEFAULT: '#F59E0B' },
+        danger: { DEFAULT: '#EF4444' },
         accent: {
-          DEFAULT: '#10b981', // emerald-500
-          dark: '#059669',    // emerald-600
+          DEFAULT: '#10b981',
+          dark: '#059669',
         },
         neutral: {
-          DEFAULT: '#64748b', // slate-500
-          dark: '#475569',    // slate-600
-          light: '#f8fafc',   // slate-50
-          darkBg: '#0f172a',  // slate-900
+          // Dark Mode specific background layers
+          darkBg: '#0B1120',
+          darkCard: '#111827',
+          darkCardSecondary: '#172033',
+          darkInput: '#1B2435',
+          darkHover: '#22304A',
+          darkBorder: 'rgba(255,255,255,0.06)',
+          // Typography
+          textPrimary: '#F8FAFC',
+          textSecondary: '#CBD5E1',
+          textMuted: '#94A3B8',
+          textPlaceholder: '#64748B',
+          // Light Mode fallbacks
+          DEFAULT: '#64748b',
+          dark: '#475569',
+          light: '#f8fafc',
         }
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
       },
+      boxShadow: {
+        'glow-primary': '0 0 20px -5px rgba(79, 140, 255, 0.4)',
+        'glow-secondary': '0 0 20px -5px rgba(139, 92, 246, 0.4)',
+        'ambient': '0 4px 40px -10px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.1)',
+        'ambient-hover': '0 10px 50px -10px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 0, 0, 0.2)',
+      },
+      animation: {
+        'gradient-x': 'gradient-x 15s ease infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        'gradient-x': {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center'
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center'
+          }
+        }
+      }
     },
   },
   plugins: [],

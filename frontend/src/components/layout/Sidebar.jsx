@@ -51,7 +51,7 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
         />
       )}
       
-      <div className={`w-64 bg-white dark:bg-slate-900 border-r border-neutral/20 dark:border-slate-800 h-screen flex flex-col fixed left-0 top-0 z-50 transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <div className={`w-64 bg-white dark:bg-neutral-darkCard/80 dark:backdrop-blur-xl border-r border-neutral/20 dark:border-neutral-darkBorder h-screen flex flex-col fixed left-0 top-0 z-50 transition-transform duration-300 ease-in-out md:translate-x-0 dark:shadow-ambient ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-6 border-b border-neutral/10 flex justify-between items-center">
         <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">PrepFlow</h1>
         <button onClick={() => setIsMobileOpen(false)} className="md:hidden text-neutral dark:text-neutral-400 hover:text-neutral-darkBg dark:hover:text-white">
@@ -71,7 +71,7 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                 className={`relative flex items-center gap-3 px-4 py-3 rounded-[12px] cursor-pointer overflow-hidden ${
                   isActive 
                     ? 'text-primary font-medium' 
-                    : 'text-neutral hover:text-neutral-darkBg dark:text-neutral-400 dark:hover:text-white'
+                    : 'text-neutral hover:text-neutral-darkBg dark:text-neutral-textSecondary dark:hover:text-white dark:hover:drop-shadow-md'
                 }`}
                 whileHover="hover"
                 initial="initial"
@@ -96,7 +96,7 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                 {/* Hover Background */}
                 {!isActive && (
                   <motion.div 
-                    className="absolute inset-0 bg-neutral-light dark:bg-slate-800 rounded-[12px] opacity-0"
+                    className="absolute inset-0 bg-neutral-light dark:bg-neutral-darkHover/40 rounded-[12px] opacity-0"
                     variants={{
                       hover: { opacity: 1, transition: { duration: 0.2 } }
                     }}
@@ -138,20 +138,20 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
             {(displayName !== 'User' ? displayName : (user?.email || '?')).charAt(0).toUpperCase()}
           </div>
           <div className="overflow-hidden flex-1">
-            <p className="text-sm font-medium text-neutral-darkBg dark:text-white truncate">{displayName}</p>
-            <p className="text-xs text-neutral dark:text-neutral-400 truncate">{user?.email}</p>
+            <p className="text-sm font-medium text-neutral-darkBg dark:text-neutral-textPrimary truncate">{displayName}</p>
+            <p className="text-xs text-neutral dark:text-neutral-textMuted truncate">{user?.email}</p>
           </div>
           <div className="flex items-center gap-1 shrink-0">
             <button 
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-1.5 text-neutral hover:text-primary dark:text-neutral-400 dark:hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
+              className="p-1.5 text-neutral hover:text-primary dark:text-neutral-textSecondary dark:hover:text-primary hover:bg-primary/10 dark:hover:bg-primary/20 rounded-md transition-all duration-200"
               title="Toggle Dark Mode"
             >
               {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
             <button 
               onClick={() => setIsSettingsOpen(true)}
-              className="p-1.5 text-neutral hover:text-primary dark:text-neutral-400 dark:hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
+              className="p-1.5 text-neutral hover:text-primary dark:text-neutral-textSecondary dark:hover:text-primary hover:bg-primary/10 dark:hover:bg-primary/20 rounded-md transition-all duration-200"
               title="Settings"
             >
               <Settings size={18} />

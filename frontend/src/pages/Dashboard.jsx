@@ -85,7 +85,7 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-gradient-to-r from-primary via-indigo-500 to-secondary p-8 rounded-2xl text-white shadow-[0_10px_30px_-10px_rgba(var(--color-primary-rgb),0.5)] relative overflow-hidden bg-[length:200%_200%] animate-gradient"
+            className="bg-gradient-to-r from-primary via-indigo-500 to-secondary dark:from-primary dark:to-secondary p-8 rounded-[18px] text-white shadow-[0_10px_30px_-10px_rgba(var(--color-primary-rgb),0.5)] dark:shadow-glow-primary relative overflow-hidden bg-[length:200%_200%] animate-gradient-x"
           >
             <div className="relative z-10">
               <h2 className="text-3xl font-bold mb-2 flex items-center">
@@ -110,12 +110,12 @@ const Dashboard = () => {
             <motion.div 
               animate={{ x: [0, 20, 0], y: [0, -20, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -right-10 -top-10 w-64 h-64 bg-white dark:bg-slate-800/20 rounded-full blur-3xl" 
+              className="absolute -right-10 -top-10 w-64 h-64 bg-white dark:bg-white/10 rounded-full blur-3xl mix-blend-overlay" 
             />
             <motion.div 
               animate={{ x: [0, -30, 0], y: [0, 20, 0] }}
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute right-32 -bottom-20 w-48 h-48 bg-primary-light/40 rounded-full blur-2xl" 
+              className="absolute right-32 -bottom-20 w-48 h-48 bg-primary-light/40 dark:bg-secondary/40 rounded-full blur-3xl mix-blend-overlay" 
             />
             
             {/* Particles */}
@@ -127,8 +127,8 @@ const Dashboard = () => {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map(i => (
-            <div key={i} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm animate-pulse h-32 relative overflow-hidden">
-              <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-neutral-light/50 to-transparent" />
+            <div key={i} className="bg-white dark:bg-neutral-darkCard p-6 rounded-[18px] border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient animate-pulse h-32 relative overflow-hidden">
+              <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-neutral-light/50 dark:via-white/5 to-transparent" />
             </div>
           ))}
         </div>
@@ -139,7 +139,7 @@ const Dashboard = () => {
           initial="hidden"
           animate="show"
         >
-          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm relative overflow-hidden group cursor-default">
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-neutral-darkCard dark:hover:bg-neutral-darkCardSecondary p-6 rounded-[18px] border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient hover:shadow-md dark:hover:shadow-ambient-hover transition-all duration-300 relative overflow-hidden group cursor-default">
              <motion.div className="absolute top-0 left-0 w-1 h-full bg-blue-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Interviews Completed</h3>
@@ -147,7 +147,7 @@ const Dashboard = () => {
              <p className="text-xs text-neutral mt-2 relative z-10">Mock sessions</p>
           </motion.div>
           
-          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm relative overflow-hidden group cursor-default">
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-neutral-darkCard dark:hover:bg-neutral-darkCardSecondary p-6 rounded-[18px] border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient hover:shadow-md dark:hover:shadow-ambient-hover transition-all duration-300 relative overflow-hidden group cursor-default">
              <motion.div className="absolute top-0 left-0 w-1 h-full bg-emerald-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Average Score</h3>
@@ -158,7 +158,7 @@ const Dashboard = () => {
              <p className="text-xs text-neutral mt-2 relative z-10">Across all sessions</p>
           </motion.div>
           
-          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm relative overflow-hidden group cursor-default">
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-neutral-darkCard dark:hover:bg-neutral-darkCardSecondary p-6 rounded-[18px] border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient hover:shadow-md dark:hover:shadow-ambient-hover transition-all duration-300 relative overflow-hidden group cursor-default">
              <motion.div className="absolute top-0 left-0 w-1 h-full bg-purple-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-purple-500/0 group-hover:bg-purple-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Highest Score</h3>
@@ -169,7 +169,7 @@ const Dashboard = () => {
              <p className="text-xs text-neutral mt-2 relative z-10">Personal best</p>
           </motion.div>
           
-          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm relative overflow-hidden group cursor-default">
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-neutral-darkCard dark:hover:bg-neutral-darkCardSecondary p-6 rounded-[18px] border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient hover:shadow-md dark:hover:shadow-ambient-hover transition-all duration-300 relative overflow-hidden group cursor-default">
              <motion.div className="absolute top-0 left-0 w-1 h-full bg-orange-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Resumes Uploaded</h3>
@@ -183,9 +183,9 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Recent Activity */}
-        <div className="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm overflow-hidden flex flex-col">
-          <div className="p-6 border-b border-neutral/10 flex justify-between items-center bg-neutral-light/30">
-            <h3 className="font-bold text-lg text-neutral-darkBg dark:text-white">Recent Interviews</h3>
+        <div className="lg:col-span-2 bg-white dark:bg-neutral-darkCard rounded-[18px] border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient overflow-hidden flex flex-col">
+          <div className="p-6 border-b border-neutral/10 dark:border-neutral-darkBorder flex justify-between items-center bg-neutral-light/30 dark:bg-neutral-darkCardSecondary/50">
+            <h3 className="font-bold text-lg text-neutral-darkBg dark:text-neutral-textPrimary">Recent Interviews</h3>
             <Button variant="ghost" size="sm" onClick={() => navigate('/interview/setup')}>+ New Interview</Button>
           </div>
           <div className="p-0 flex-1">
@@ -209,8 +209,8 @@ const Dashboard = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-20px" }}
                     transition={{ delay: index * 0.05 }}
-                    whileHover={{ y: -2, backgroundColor: "rgba(248, 250, 252, 0.8)" }}
-                    className="p-6 transition-all flex items-center justify-between group relative border-l-2 border-transparent hover:border-primary"
+                    whileHover={{ y: -2, backgroundColor: "rgba(79, 140, 255, 0.05)" }}
+                    className="p-6 transition-all flex items-center justify-between group relative border-l-2 border-transparent hover:border-primary dark:hover:bg-neutral-darkHover"
                   >
                     <div>
                       <h4 className="font-semibold text-neutral-darkBg dark:text-white group-hover:text-primary transition-colors">
@@ -264,8 +264,8 @@ const Dashboard = () => {
             <Button className="w-full" variant="secondary" onClick={() => navigate('/resumes')}>Upload Resume</Button>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-neutral/20 dark:border-slate-700 shadow-sm">
-            <h3 className="font-bold text-lg text-neutral-darkBg dark:text-white mb-4">Your Rank</h3>
+          <div className="bg-white dark:bg-neutral-darkCard rounded-[18px] p-6 border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient">
+            <h3 className="font-bold text-lg text-neutral-darkBg dark:text-neutral-textPrimary mb-4">Your Rank</h3>
             {!isLoading && stats && (
               <div className="flex flex-col items-center my-4">
                 <div className="flex flex-col items-center justify-center p-2 mb-2">

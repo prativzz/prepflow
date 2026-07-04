@@ -13,10 +13,10 @@ const Input = React.forwardRef(({ className, type, error, ...props }, ref) => {
       <input
         type={inputType}
         className={cn(
-          "flex h-11 w-full rounded-[14px] border border-neutral/30 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-sm dark:text-white placeholder:text-neutral dark:placeholder:text-neutral-400 transition-all duration-300",
-          "hover:border-primary/50",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary",
-          "focus-visible:shadow-[0_0_15px_rgba(var(--color-primary-rgb),0.15)]",
+          "flex h-11 w-full rounded-[14px] border border-neutral/30 dark:border-neutral-darkBorder bg-white dark:bg-neutral-darkInput px-4 py-2 text-sm dark:text-neutral-textPrimary placeholder:text-neutral dark:placeholder:text-neutral-textPlaceholder transition-all duration-300",
+          "hover:border-primary/50 dark:hover:border-primary/50",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 dark:focus-visible:ring-primary/30 focus-visible:border-primary dark:focus-visible:border-primary",
+          "focus-visible:shadow-[0_0_15px_rgba(var(--color-primary-rgb),0.15)] dark:focus-visible:shadow-glow-primary",
           "disabled:cursor-not-allowed disabled:opacity-50",
           error && "border-red-500 focus-visible:ring-red-500/20 focus-visible:border-red-500 focus-visible:shadow-[0_0_15px_rgba(239,68,68,0.15)]",
           isPassword && "pr-10",

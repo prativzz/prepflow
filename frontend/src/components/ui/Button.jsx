@@ -6,10 +6,10 @@ const Button = React.forwardRef(({ className, variant = 'primary', size = 'defau
   const baseStyles = "relative inline-flex items-center justify-center rounded-[14px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50 overflow-hidden";
   
   const variants = {
-    primary: "bg-primary text-white shadow-sm border border-primary/20",
-    secondary: "bg-secondary text-white hover:bg-secondary-dark shadow-sm border border-secondary/20",
-    outline: "border border-neutral/30 bg-transparent text-neutral-darkBg",
-    ghost: "text-neutral-darkBg",
+    primary: "bg-primary text-white shadow-sm border border-primary/20 dark:bg-gradient-to-r dark:from-primary dark:to-secondary dark:border-transparent dark:shadow-ambient",
+    secondary: "bg-secondary text-white hover:bg-secondary-dark shadow-sm border border-secondary/20 dark:bg-neutral-darkCardSecondary/80 dark:backdrop-blur-md dark:border-neutral-darkBorder dark:text-neutral-textPrimary dark:hover:bg-neutral-darkHover",
+    outline: "border border-neutral/30 bg-transparent text-neutral-darkBg dark:text-neutral-textPrimary dark:border-neutral-darkBorder dark:hover:bg-neutral-darkHover/50",
+    ghost: "text-neutral-darkBg dark:text-neutral-textPrimary dark:hover:bg-neutral-darkHover/50",
   };
   
   const sizes = {
@@ -28,19 +28,18 @@ const Button = React.forwardRef(({ className, variant = 'primary', size = 'defau
       disabled={isLoading || props.disabled}
       whileHover={
         !props.disabled && !isLoading ? {
-          y: -3,
-          scale: 1.03,
+          y: -2,
+          scale: 1.02,
           boxShadow: isPrimary 
-            ? "0 10px 25px -5px rgba(var(--color-primary-rgb), 0.5), 0 8px 10px -6px rgba(var(--color-primary-rgb), 0.5)" 
-            : "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-          backgroundColor: isPrimary ? "var(--color-primary-light)" : undefined,
-          transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] }
+            ? "0 0 20px -5px rgba(79, 140, 255, 0.5), 0 10px 50px -10px rgba(0, 0, 0, 0.6)" 
+            : "0 10px 50px -10px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 0, 0, 0.1)",
+          transition: { duration: 0.18, ease: "easeOut" }
         } : {}
       }
       whileTap={
         !props.disabled && !isLoading ? { 
           scale: 0.96, 
-          transition: { duration: 0.1 } 
+          transition: { duration: 0.12 } 
         } : {}
       }
       {...props}
@@ -48,7 +47,7 @@ const Button = React.forwardRef(({ className, variant = 'primary', size = 'defau
       {/* Primary variant background gradient animation */}
       {isPrimary && (
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-primary to-primary-light opacity-0 transition-opacity duration-300"
+          className="absolute inset-0 bg-gradient-to-r from-secondary to-primary opacity-0 transition-opacity duration-300"
           whileHover={{ opacity: 1 }}
         />
       )}

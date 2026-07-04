@@ -7,8 +7,34 @@
     @apply bg-neutral-light text-neutral-darkBg antialiased font-sans transition-colors duration-200;
   }
   
-  /* Dark mode support if we add a 'dark' class to html */
+  /* Premium Dark Mode support */
   .dark body {
-    @apply bg-neutral-darkBg text-neutral-light;
+    @apply bg-neutral-darkBg text-neutral-textPrimary;
+    /* Multiple background layers for depth */
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(79, 140, 255, 0.05), transparent 45%),
+      radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.05), transparent 45%);
+    background-attachment: fixed;
+  }
+
+  /* Custom Scrollbar for Dark Mode */
+  .dark ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: #0B1120;
+    border-radius: 4px;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    transition: background 0.2s ease;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(79, 140, 255, 0.5); /* Blue Accent hover */
   }
 }
