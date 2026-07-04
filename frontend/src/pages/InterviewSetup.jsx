@@ -63,12 +63,12 @@ const InterviewSetup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-light p-8 flex items-center justify-center">
-      <div className="max-w-2xl w-full bg-white p-8 rounded-2xl border border-neutral/20 shadow-lg relative overflow-hidden">
+    <div className="min-h-screen bg-neutral-light dark:bg-transparent p-8 flex items-center justify-center">
+      <div className="max-w-2xl w-full bg-white dark:bg-neutral-darkCard p-8 rounded-2xl border border-neutral/20 dark:border-neutral-darkBorder shadow-lg dark:shadow-ambient relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-secondary"></div>
         
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-neutral-darkBg">Interview Setup</h1>
+          <h1 className="text-3xl font-bold text-neutral-darkBg dark:text-white">Interview Setup</h1>
           <p className="text-neutral mt-2">Configure your AI mock interview parameters.</p>
         </div>
 
@@ -76,12 +76,12 @@ const InterviewSetup = () => {
 
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-neutral-darkBg mb-2">Select Your Resume</label>
+            <label className="block text-sm font-medium text-neutral-darkBg dark:text-neutral-textSecondary mb-2">Select Your Resume</label>
             {resumes.length === 0 ? (
               <p className="text-sm text-orange-600">No resumes found. <Link to="/resumes" className="underline">Upload one first.</Link></p>
             ) : (
               <select 
-                className="w-full h-11 px-4 rounded-lg border border-neutral/30 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full h-11 px-4 rounded-lg border border-neutral/30 dark:border-neutral-darkBorder bg-white dark:bg-neutral-darkInput text-neutral-darkBg dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 value={selectedResume}
                 onChange={e => setSelectedResume(e.target.value)}
               >
@@ -93,12 +93,12 @@ const InterviewSetup = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-neutral-darkBg mb-2">Select Target Job Description</label>
+            <label className="block text-sm font-medium text-neutral-darkBg dark:text-neutral-textSecondary mb-2">Select Target Job Description</label>
             {jobs.length === 0 ? (
               <p className="text-sm text-orange-600">No jobs found. <Link to="/ats" className="underline">Create one via ATS Match first.</Link></p>
             ) : (
               <select 
-                className="w-full h-11 px-4 rounded-lg border border-neutral/30 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full h-11 px-4 rounded-lg border border-neutral/30 dark:border-neutral-darkBorder bg-white dark:bg-neutral-darkInput text-neutral-darkBg dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 value={selectedJob}
                 onChange={e => setSelectedJob(e.target.value)}
               >
@@ -110,7 +110,7 @@ const InterviewSetup = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-neutral-darkBg mb-2">Difficulty Level</label>
+            <label className="block text-sm font-medium text-neutral-darkBg dark:text-neutral-textSecondary mb-2">Difficulty Level</label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
               {['intern', 'fresher', 'sde-1', 'sde-2', 'senior'].map(level => (
                 <div 
@@ -118,8 +118,8 @@ const InterviewSetup = () => {
                   onClick={() => setDifficultyLevel(level)}
                   className={`cursor-pointer border rounded-lg py-2 text-center text-sm font-medium transition-all ${
                     difficultyLevel === level 
-                      ? 'border-primary bg-primary/10 text-primary-dark shadow-sm' 
-                      : 'border-neutral/30 text-neutral hover:bg-neutral-light'
+                      ? 'border-primary bg-primary/10 text-primary-dark dark:text-primary shadow-sm dark:shadow-ambient' 
+                      : 'border-neutral/30 dark:border-neutral-darkBorder text-neutral dark:text-neutral-textSecondary hover:bg-neutral-light dark:hover:bg-neutral-darkCardSecondary'
                   }`}
                 >
                   {level.toUpperCase()}

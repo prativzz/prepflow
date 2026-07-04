@@ -82,11 +82,11 @@ const ATSAnalysis = () => {
   };
 
   return (
-    <PageWrapper className="min-h-screen bg-neutral-light p-8">
+    <PageWrapper className="min-h-screen bg-neutral-light dark:bg-transparent p-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-neutral-darkBg">ATS Match Analyzer</h1>
+            <h1 className="text-3xl font-bold text-neutral-darkBg dark:text-white">ATS Match Analyzer</h1>
             <p className="text-neutral mt-1">Compare your resume against a job description.</p>
           </div>
         </div>
@@ -94,15 +94,15 @@ const ATSAnalysis = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Column: Input */}
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-xl border border-neutral/20 shadow-sm">
-              <h2 className="text-xl font-semibold mb-4 text-neutral-darkBg">1. Select Resume</h2>
+            <div className="bg-white dark:bg-neutral-darkCard p-6 rounded-xl border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient">
+              <h2 className="text-xl font-semibold mb-4 text-neutral-darkBg dark:text-white">1. Select Resume</h2>
               {resumes.length === 0 ? (
                 <div className="p-4 bg-orange-50 text-orange-600 rounded-md text-sm border border-orange-200">
                   You haven't uploaded any resumes yet. <Link to="/resumes" className="underline font-semibold">Upload one here</Link>.
                 </div>
               ) : (
                 <select 
-                  className="w-full h-10 px-3 py-2 rounded-md border border-neutral/30 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full h-10 px-3 py-2 rounded-md border border-neutral/30 dark:border-neutral-darkBorder bg-white dark:bg-neutral-darkInput text-neutral-darkBg dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                   value={selectedResumeId}
                   onChange={(e) => setSelectedResumeId(e.target.value)}
                 >
@@ -113,23 +113,23 @@ const ATSAnalysis = () => {
               )}
             </div>
 
-            <div className="bg-white p-6 rounded-xl border border-neutral/20 shadow-sm">
-              <h2 className="text-xl font-semibold mb-4 text-neutral-darkBg">2. Paste Job Description</h2>
+            <div className="bg-white dark:bg-neutral-darkCard p-6 rounded-xl border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient">
+              <h2 className="text-xl font-semibold mb-4 text-neutral-darkBg dark:text-white">2. Paste Job Description</h2>
               <div className="space-y-4">
                 <div className="flex gap-4">
                   <div className="w-1/2">
-                    <label className="block text-sm font-medium text-neutral-darkBg mb-1">Job Title *</label>
+                    <label className="block text-sm font-medium text-neutral-darkBg dark:text-neutral-textSecondary mb-1">Job Title *</label>
                     <input 
-                      className="w-full h-10 px-3 py-2 rounded-md border border-neutral/30 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full h-10 px-3 py-2 rounded-md border border-neutral/30 dark:border-neutral-darkBorder bg-white dark:bg-neutral-darkInput text-neutral-darkBg dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="e.g. Software Engineer"
                       value={jobTitle}
                       onChange={e => setJobTitle(e.target.value)}
                     />
                   </div>
                   <div className="w-1/2">
-                    <label className="block text-sm font-medium text-neutral-darkBg mb-1">Company</label>
+                    <label className="block text-sm font-medium text-neutral-darkBg dark:text-neutral-textSecondary mb-1">Company</label>
                     <input 
-                      className="w-full h-10 px-3 py-2 rounded-md border border-neutral/30 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full h-10 px-3 py-2 rounded-md border border-neutral/30 dark:border-neutral-darkBorder bg-white dark:bg-neutral-darkInput text-neutral-darkBg dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="e.g. Google"
                       value={jobCompany}
                       onChange={e => setJobCompany(e.target.value)}
@@ -137,9 +137,9 @@ const ATSAnalysis = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-neutral-darkBg mb-1">Job Description Content *</label>
+                  <label className="block text-sm font-medium text-neutral-darkBg dark:text-neutral-textSecondary mb-1">Job Description Content *</label>
                   <textarea 
-                    className="w-full h-64 px-3 py-2 rounded-md border border-neutral/30 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                    className="w-full h-64 px-3 py-2 rounded-md border border-neutral/30 dark:border-neutral-darkBorder bg-white dark:bg-neutral-darkInput text-neutral-darkBg dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary resize-none"
                     placeholder="Paste the full job description here..."
                     value={jobContent}
                     onChange={e => setJobContent(e.target.value)}
@@ -162,7 +162,7 @@ const ATSAnalysis = () => {
           </div>
 
           {/* Right Column: Results */}
-          <div className="bg-white p-6 rounded-xl border border-neutral/20 shadow-sm relative overflow-hidden flex flex-col min-h-[400px]">
+          <div className="bg-white dark:bg-neutral-darkCard p-6 rounded-xl border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient relative overflow-hidden flex flex-col min-h-[400px]">
             <AnimatePresence mode="wait">
               {isAnalyzing ? (
                 <motion.div 
@@ -170,7 +170,7 @@ const ATSAnalysis = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 flex flex-col items-center justify-center p-8 bg-white z-10"
+                  className="absolute inset-0 flex flex-col items-center justify-center p-8 bg-white dark:bg-neutral-darkCard z-10"
                 >
                   <div className="w-full max-w-xs space-y-6">
                     <div className="flex justify-between text-sm font-medium text-primary">
@@ -184,7 +184,7 @@ const ATSAnalysis = () => {
                       </motion.span>
                       <span>{Math.round(((loadingStep + 1) / loadingSteps.length) * 100)}%</span>
                     </div>
-                    <div className="w-full h-2 bg-neutral-light rounded-full overflow-hidden">
+                    <div className="w-full h-2 bg-neutral-light dark:bg-neutral-darkCardSecondary rounded-full overflow-hidden">
                       <motion.div 
                         className="h-full bg-primary"
                         initial={{ width: "0%" }}
@@ -216,14 +216,14 @@ const ATSAnalysis = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     <motion.div 
-                      className="absolute -right-2 -bottom-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm"
+                      className="absolute -right-2 -bottom-2 w-8 h-8 bg-white dark:bg-neutral-darkCardSecondary rounded-full flex items-center justify-center shadow-sm dark:shadow-ambient"
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
                       <div className="w-2 h-2 bg-primary rounded-full animate-ping" />
                     </motion.div>
                   </motion.div>
-                  <h3 className="text-xl font-medium text-neutral-darkBg">Awaiting Analysis</h3>
+                  <h3 className="text-xl font-medium text-neutral-darkBg dark:text-white">Awaiting Analysis</h3>
                   <p className="text-neutral mt-2 max-w-sm">Fill out the details on the left and hit analyze to see your ATS score and missing keywords.</p>
                 </motion.div>
               ) : (
@@ -233,7 +233,7 @@ const ATSAnalysis = () => {
                 className="space-y-8"
               >
                 <div className="flex flex-col items-center justify-center pt-4">
-                  <h3 className="text-lg font-medium text-neutral-darkBg mb-6">Match Score</h3>
+                  <h3 className="text-lg font-medium text-neutral-darkBg dark:text-white mb-6">Match Score</h3>
                   <ProgressCircle percentage={analysisResult.score} size={160} strokeWidth={12} />
                   <p className="mt-6 text-center text-neutral text-sm max-w-sm">
                     {analysisResult.score >= 80 ? 'Excellent match! Your resume is highly tailored for this role.' : 
@@ -242,10 +242,10 @@ const ATSAnalysis = () => {
                   </p>
                 </div>
 
-                <hr className="border-neutral/20" />
+                <hr className="border-neutral/20 dark:border-neutral-darkBorder" />
 
                 <div>
-                  <h3 className="text-lg font-medium text-neutral-darkBg mb-4">Missing Keywords</h3>
+                  <h3 className="text-lg font-medium text-neutral-darkBg dark:text-white mb-4">Missing Keywords</h3>
                   {analysisResult.missingKeywords.length === 0 ? (
                     <div className="p-4 bg-emerald-50 text-emerald-700 rounded-md border border-emerald-200">
                       Perfect! We couldn't find any major keywords missing from your resume.
@@ -258,7 +258,7 @@ const ATSAnalysis = () => {
                         </span>
                       ))}
                       {analysisResult.missingKeywords.length > 20 && (
-                        <span className="px-3 py-1 bg-neutral-light text-neutral text-sm rounded-full border border-neutral/20">
+                        <span className="px-3 py-1 bg-neutral-light dark:bg-neutral-darkCardSecondary text-neutral dark:text-neutral-textSecondary text-sm rounded-full border border-neutral/20 dark:border-neutral-darkBorder">
                           +{analysisResult.missingKeywords.length - 20} more
                         </span>
                       )}
@@ -267,8 +267,8 @@ const ATSAnalysis = () => {
                 </div>
                 
                 <div className="bg-primary/5 p-4 rounded-lg border border-primary/20">
-                  <h4 className="font-medium text-primary-dark mb-2">Pro Tip</h4>
-                  <p className="text-sm text-neutral-darkBg">
+                  <h4 className="font-medium text-primary-dark dark:text-primary mb-2">Pro Tip</h4>
+                  <p className="text-sm text-neutral-darkBg dark:text-neutral-textPrimary">
                     {analysisResult.proTip || "Don't just randomly insert these keywords. Try to naturally incorporate them into your bullet points, demonstrating how you used these skills to achieve tangible results."}
                   </p>
                 </div>

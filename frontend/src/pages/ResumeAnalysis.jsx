@@ -58,19 +58,19 @@ const ResumeAnalysis = () => {
   };
 
   return (
-    <PageWrapper className="min-h-screen bg-neutral-light p-8">
+    <PageWrapper className="min-h-screen bg-neutral-light dark:bg-transparent p-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-neutral-darkBg">Resume Repository</h1>
+            <h1 className="text-3xl font-bold text-neutral-darkBg dark:text-white">Resume Repository</h1>
             <p className="text-neutral mt-1">Upload and manage your resumes for ATS analysis.</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
-            <div className="bg-white p-6 rounded-xl border border-neutral/20 shadow-sm">
-              <h2 className="text-xl font-semibold mb-4 text-neutral-darkBg">Upload New</h2>
+            <div className="bg-white dark:bg-neutral-darkCard p-6 rounded-xl border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient">
+              <h2 className="text-xl font-semibold mb-4 text-neutral-darkBg dark:text-white">Upload New</h2>
               <FileUpload onFileSelect={setSelectedFile} />
               
               {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
@@ -87,8 +87,8 @@ const ResumeAnalysis = () => {
           </div>
 
           <div className="md:col-span-2">
-            <div className="bg-white p-6 rounded-xl border border-neutral/20 shadow-sm">
-              <h2 className="text-xl font-semibold mb-4 text-neutral-darkBg">Your Resumes</h2>
+            <div className="bg-white dark:bg-neutral-darkCard p-6 rounded-xl border border-neutral/20 dark:border-neutral-darkBorder shadow-sm dark:shadow-ambient">
+              <h2 className="text-xl font-semibold mb-4 text-neutral-darkBg dark:text-white">Your Resumes</h2>
               
               <div className="max-h-[400px] overflow-y-auto pr-2">
                 {isLoading ? (
@@ -109,21 +109,21 @@ const ResumeAnalysis = () => {
                         key={resume._id}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="border border-neutral/20 rounded-lg p-4 hover:border-primary/50 transition-colors flex justify-between items-center"
+                        className="border border-neutral/20 dark:border-neutral-darkBorder rounded-lg p-4 hover:border-primary/50 dark:hover:border-primary/50 transition-colors flex justify-between items-center"
                       >
                         <div>
-                          <h3 className="font-medium text-neutral-darkBg">{resume.originalName}</h3>
+                          <h3 className="font-medium text-neutral-darkBg dark:text-white">{resume.originalName}</h3>
                           <p className="text-sm text-neutral mt-1">
                             Uploaded on {new Date(resume.createdAt).toLocaleDateString()}
                           </p>
                           <div className="flex flex-wrap gap-2 mt-3">
-                            {resume.extractedKeywords.slice(0, 5).map(kw => (
-                              <span key={kw} className="px-2 py-1 bg-neutral-light text-xs rounded-full text-neutral-darkBg">
+                            {(resume.extractedKeywords || []).slice(0, 5).map(kw => (
+                              <span key={kw} className="px-2 py-1 bg-neutral-light dark:bg-neutral-darkCardSecondary text-xs rounded-full text-neutral-darkBg dark:text-neutral-textSecondary">
                                 {kw}
                               </span>
                             ))}
-                            {resume.extractedKeywords.length > 5 && (
-                              <span className="px-2 py-1 text-xs text-neutral">+{resume.extractedKeywords.length - 5} more</span>
+                            {(resume.extractedKeywords || []).length > 5 && (
+                              <span className="px-2 py-1 text-xs text-neutral">+{(resume.extractedKeywords || []).length - 5} more</span>
                             )}
                           </div>
                         </div>
