@@ -26,12 +26,12 @@ export default {
         },
         neutral: {
           // Dark Mode specific background layers
-          darkBg: '#0B1120',
-          darkCard: '#111827',
-          darkCardSecondary: '#172033',
-          darkInput: '#1B2435',
-          darkHover: '#22304A',
-          darkBorder: 'rgba(255,255,255,0.06)',
+          darkBg: '#09090b',
+          darkCard: '#18181b',
+          darkCardSecondary: '#27272a',
+          darkInput: '#27272a',
+          darkHover: '#3f3f46',
+          darkBorder: 'rgba(255,255,255,0.08)',
           // Typography
           textPrimary: '#F8FAFC',
           textSecondary: '#CBD5E1',
