@@ -4,6 +4,7 @@ import { Button } from '../components/ui/Button';
 import { resumeApi } from '../api/resume.api';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { PageWrapper } from '../components/layout/PageWrapper';
 import { Trash2 } from 'lucide-react';
 
 const ResumeAnalysis = () => {
@@ -57,7 +58,7 @@ const ResumeAnalysis = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-light p-8">
+    <PageWrapper className="min-h-screen bg-neutral-light p-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -152,7 +153,7 @@ const ResumeAnalysis = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Button } from '../ui/Button';
-import { Settings, X } from 'lucide-react';
+import { Settings, X, Moon, Sun } from 'lucide-react';
 import { SettingsModal } from './SettingsModal';
 
 export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  });
+
+  React.useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
 
   const handleLogout = async () => {
     await logout();
@@ -50,18 +64,70 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
           <NavLink
             key={item.name}
             to={item.path}
-            className={({ isActive }) => 
-              `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                isActive 
-                  ? 'bg-primary/10 text-primary font-medium' 
-                  : 'text-neutral hover:bg-neutral-light hover:text-neutral-darkBg'
-              }`
-            }
+            className="block outline-none"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon} />
-            </svg>
-            {item.name}
+            {({ isActive }) => (
+              <motion.div
+                className={`relative flex items-center gap-3 px-4 py-3 rounded-[12px] cursor-pointer overflow-hidden ${
+                  isActive 
+                    ? 'text-primary font-medium' 
+                    : 'text-neutral hover:text-neutral-darkBg'
+                }`}
+                whileHover="hover"
+                initial="initial"
+                animate={isActive ? "active" : "inactive"}
+              >
+                {/* Active Indicator Line & Background Fill */}
+                {isActive && (
+                  <>
+                    <motion.div 
+                      layoutId="sidebar-active-indicator"
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-8 bg-primary rounded-r-md shadow-[0_0_10px_rgba(var(--color-primary-rgb),0.8)]"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                    <motion.div 
+                      layoutId="sidebar-active-bg"
+                      className="absolute inset-0 bg-primary/10 rounded-[12px]"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  </>
+                )}
+                
+                {/* Hover Background */}
+                {!isActive && (
+                  <motion.div 
+                    className="absolute inset-0 bg-neutral-light rounded-[12px] opacity-0"
+                    variants={{
+                      hover: { opacity: 1, transition: { duration: 0.2 } }
+                    }}
+                  />
+                )}
+
+                <motion.div 
+                  className="relative z-10 flex items-center justify-center text-current"
+                  variants={{
+                    hover: { rotate: 5, scale: 1.1, color: "var(--color-primary)", x: 2 },
+                    active: { scale: 1.15, color: "var(--color-primary)" },
+                    inactive: { rotate: 0, scale: 1, x: 0 }
+                  }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon} />
+                  </svg>
+                </motion.div>
+                
+                <motion.span 
+                  className="relative z-10"
+                  variants={{
+                    hover: { x: 4 }
+                  }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {item.name}
+                </motion.span>
+              </motion.div>
+            )}
           </NavLink>
         ))}
       </nav>
@@ -75,13 +141,22 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
             <p className="text-sm font-medium text-neutral-darkBg truncate">{displayName}</p>
             <p className="text-xs text-neutral truncate">{user?.email}</p>
           </div>
-          <button 
-            onClick={() => setIsSettingsOpen(true)}
-            className="p-1.5 text-neutral hover:text-primary hover:bg-primary/10 rounded-md transition-colors shrink-0"
-            title="Settings"
-          >
-            <Settings size={18} />
-          </button>
+          <div className="flex items-center gap-1 shrink-0">
+            <button 
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="p-1.5 text-neutral hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
+              title="Toggle Dark Mode"
+            >
+              {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <button 
+              onClick={() => setIsSettingsOpen(true)}
+              className="p-1.5 text-neutral hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
+              title="Settings"
+            >
+              <Settings size={18} />
+            </button>
+          </div>
         </div>
         <Button variant="outline" className="w-full text-red-500 border-red-200 hover:bg-red-50" onClick={handleLogout}>
           Logout

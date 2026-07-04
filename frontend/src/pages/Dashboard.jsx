@@ -3,7 +3,10 @@ import { useAuthStore } from '../store/useAuthStore';
 import { Button } from '../components/ui/Button';
 import { useNavigate, Link } from 'react-router-dom';
 import { analyticsApi } from '../api/analytics.api';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { PageWrapper } from '../components/layout/PageWrapper';
+import { AnimatedCounter } from '../components/ui/AnimatedCounter';
+import { CARD_HOVER, STAGGER_CONTAINER, STAGGER_ITEM } from '../utils/animations';
 
 const TwoToneCrown = ({ leftColor, rightColor, className }) => (
   <svg viewBox="0 0 100 80" className={className} xmlns="http://www.w3.org/2000/svg">
@@ -74,68 +77,106 @@ const Dashboard = () => {
   const rank = stats ? getRankInfo(stats.totalInterviews) : getRankInfo(0);
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <PageWrapper className="space-y-8">
       {/* Welcome Banner */}
-      {showWelcome && (
-        <div className="bg-gradient-to-r from-primary to-secondary p-8 rounded-2xl text-white shadow-lg relative overflow-hidden">
-          <div className="relative z-10">
-            <h2 className="text-3xl font-bold mb-2">
-              {isNewUser ? 'Welcome, ' : 'Welcome back, '}
-              {user?.name || (user?.email ? user.email.split('@')[0] : 'User')}! 👋
-            </h2>
-            <p className="text-white/80 max-w-xl">
-              {isNewUser 
-                ? "We're excited to have you! Start practicing your interviews to boost your ATS match scores and secure that dream offer." 
-                : "You're making great progress. Keep practicing your interviews to boost your ATS match scores and secure that dream offer."}
-            </p>
-          </div>
-          {/* Decorative circle */}
-          <div className="absolute -right-10 -top-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-        </div>
-      )}
+      <AnimatePresence>
+        {showWelcome && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="bg-gradient-to-r from-primary via-indigo-500 to-secondary p-8 rounded-2xl text-white shadow-[0_10px_30px_-10px_rgba(var(--color-primary-rgb),0.5)] relative overflow-hidden bg-[length:200%_200%] animate-gradient"
+          >
+            <div className="relative z-10">
+              <h2 className="text-3xl font-bold mb-2 flex items-center">
+                {isNewUser ? 'Welcome, ' : 'Welcome back, '}
+                {user?.name || (user?.email ? user.email.split('@')[0] : 'User')}! 
+                <motion.span 
+                  className="inline-block ml-2 origin-bottom-right"
+                  animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
+                  transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }}
+                >
+                  👋
+                </motion.span>
+              </h2>
+              <p className="text-white/90 max-w-xl font-medium">
+                {isNewUser 
+                  ? "We're excited to have you! Start practicing your interviews to boost your ATS match scores and secure that dream offer." 
+                  : "You're making great progress. Keep practicing your interviews to boost your ATS match scores and secure that dream offer."}
+              </p>
+            </div>
+            
+            {/* Floating blurred circles */}
+            <motion.div 
+              animate={{ x: [0, 20, 0], y: [0, -20, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -right-10 -top-10 w-64 h-64 bg-white/20 rounded-full blur-3xl" 
+            />
+            <motion.div 
+              animate={{ x: [0, -30, 0], y: [0, 20, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute right-32 -bottom-20 w-48 h-48 bg-primary-light/40 rounded-full blur-2xl" 
+            />
+            
+            {/* Particles */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px] opacity-30"></div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map(i => (
-            <div key={i} className="bg-white p-6 rounded-xl border border-neutral/20 shadow-sm animate-pulse h-32"></div>
+            <div key={i} className="bg-white p-6 rounded-2xl border border-neutral/20 shadow-sm animate-pulse h-32 relative overflow-hidden">
+              <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-neutral-light/50 to-transparent" />
+            </div>
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white p-6 rounded-xl border border-neutral/20 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-             <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
-             <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2">Interviews Completed</h3>
-             <p className="text-4xl font-bold text-neutral-darkBg">{stats.totalInterviews}</p>
-             <p className="text-xs text-neutral mt-2">Mock sessions</p>
-          </div>
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          variants={STAGGER_CONTAINER}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white p-6 rounded-2xl border border-neutral/20 shadow-sm relative overflow-hidden group cursor-default">
+             <motion.div className="absolute top-0 left-0 w-1 h-full bg-blue-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
+             <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/5 transition-colors duration-300" />
+             <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Interviews Completed</h3>
+             <AnimatedCounter value={stats.totalInterviews} className="text-4xl font-bold text-neutral-darkBg relative z-10 block" />
+             <p className="text-xs text-neutral mt-2 relative z-10">Mock sessions</p>
+          </motion.div>
           
-          <div className="bg-white p-6 rounded-xl border border-neutral/20 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-             <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
-             <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2">Average Score</h3>
-             <div className="flex items-end gap-2">
-               <p className="text-4xl font-bold text-neutral-darkBg">{stats.averageScore}</p>
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white p-6 rounded-2xl border border-neutral/20 shadow-sm relative overflow-hidden group cursor-default">
+             <motion.div className="absolute top-0 left-0 w-1 h-full bg-emerald-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
+             <div className="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/5 transition-colors duration-300" />
+             <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Average Score</h3>
+             <div className="flex items-end gap-2 relative z-10">
+               <AnimatedCounter value={stats.averageScore} className="text-4xl font-bold text-neutral-darkBg block" />
                <span className="text-lg text-neutral font-medium mb-1">%</span>
              </div>
-             <p className="text-xs text-neutral mt-2">Across all sessions</p>
-          </div>
+             <p className="text-xs text-neutral mt-2 relative z-10">Across all sessions</p>
+          </motion.div>
           
-          <div className="bg-white p-6 rounded-xl border border-neutral/20 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-             <div className="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
-             <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2">Highest Score</h3>
-             <div className="flex items-end gap-2">
-               <p className="text-4xl font-bold text-neutral-darkBg">{stats.highestScore}</p>
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white p-6 rounded-2xl border border-neutral/20 shadow-sm relative overflow-hidden group cursor-default">
+             <motion.div className="absolute top-0 left-0 w-1 h-full bg-purple-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
+             <div className="absolute inset-0 bg-purple-500/0 group-hover:bg-purple-500/5 transition-colors duration-300" />
+             <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Highest Score</h3>
+             <div className="flex items-end gap-2 relative z-10">
+               <AnimatedCounter value={stats.highestScore} className="text-4xl font-bold text-neutral-darkBg block" />
                <span className="text-lg text-neutral font-medium mb-1">%</span>
              </div>
-             <p className="text-xs text-neutral mt-2">Personal best</p>
-          </div>
+             <p className="text-xs text-neutral mt-2 relative z-10">Personal best</p>
+          </motion.div>
           
-          <div className="bg-white p-6 rounded-xl border border-neutral/20 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-             <div className="absolute top-0 left-0 w-1 h-full bg-orange-500"></div>
-             <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2">Resumes Uploaded</h3>
-             <p className="text-4xl font-bold text-neutral-darkBg">{stats.totalResumes}</p>
-             <p className="text-xs text-neutral mt-2">In your repository</p>
-          </div>
-        </div>
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white p-6 rounded-2xl border border-neutral/20 shadow-sm relative overflow-hidden group cursor-default">
+             <motion.div className="absolute top-0 left-0 w-1 h-full bg-orange-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
+             <div className="absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/5 transition-colors duration-300" />
+             <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Resumes Uploaded</h3>
+             <AnimatedCounter value={stats.totalResumes} className="text-4xl font-bold text-neutral-darkBg block relative z-10" />
+             <p className="text-xs text-neutral mt-2 relative z-10">In your repository</p>
+          </motion.div>
+        </motion.div>
       )}
 
       {/* Main Content Area */}
@@ -161,18 +202,21 @@ const Dashboard = () => {
               </div>
             ) : (
               <ul className="divide-y divide-neutral/10">
-                {recentActivity.map((session) => (
+                {recentActivity.map((session, index) => (
                   <motion.li 
                     key={session._id} 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="p-6 hover:bg-neutral-light/50 transition-colors flex items-center justify-between group"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-20px" }}
+                    transition={{ delay: index * 0.05 }}
+                    whileHover={{ y: -2, backgroundColor: "rgba(248, 250, 252, 0.8)" }}
+                    className="p-6 transition-all flex items-center justify-between group relative border-l-2 border-transparent hover:border-primary"
                   >
                     <div>
                       <h4 className="font-semibold text-neutral-darkBg group-hover:text-primary transition-colors">
                         {session.jobDescription?.title || 'Unknown Role'}
                       </h4>
-                      <p className="text-sm text-neutral mt-1">
+                      <p className="text-sm text-neutral mt-1 group-hover:opacity-80 transition-opacity">
                         {new Date(session.createdAt).toLocaleDateString()} • {session.difficultyLevel.toUpperCase()}
                       </p>
                     </div>
@@ -192,7 +236,14 @@ const Dashboard = () => {
                         )}
                       </div>
                       <Link to={session.status === 'completed' ? `/interview/${session._id}/feedback` : '#'}>
-                        <Button variant="outline" size="sm" disabled={session.status !== 'completed'}>Review</Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          disabled={session.status !== 'completed'}
+                          className="opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300"
+                        >
+                          Review
+                        </Button>
                       </Link>
                     </div>
                   </motion.li>
@@ -254,7 +305,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-    </div>
+      </PageWrapper>
   );
 };
 

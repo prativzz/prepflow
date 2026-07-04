@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { useAuthStore } from './store/useAuthStore';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -19,6 +20,7 @@ import { authApi } from './api/auth.api';
 
 function App() {
   const { setAuth, isLoading } = useAuthStore();
+  const location = useLocation();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -44,29 +46,31 @@ function App() {
 
   return (
     <div className="min-h-screen font-sans text-neutral-darkBg bg-neutral-light">
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<LandingPage />} />
-        {/* Public-only Routes (redirect to dashboard if logged in) */}
-        <Route element={<PublicOnlyRoute />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-        </Route>
-
-        {/* Protected Routes */}
-        <Route element={<ProtectedRoute />}>
-          <Route element={<MainLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/resumes" element={<ResumeAnalysis />} />
-            <Route path="/ats" element={<ATSAnalysis />} />
-            <Route path="/interview/setup" element={<InterviewSetup />} />
-            <Route path="/interview/:id/feedback" element={<InterviewFeedback />} />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          {/* Public-only Routes (redirect to dashboard if logged in) */}
+          <Route element={<PublicOnlyRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
           </Route>
-          {/* Interview Room doesn't use the sidebar layout because it needs full screen focus */}
-          <Route path="/interview/:id" element={<InterviewRoom />} />
-        </Route>
-      </Routes>
+
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<MainLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/resumes" element={<ResumeAnalysis />} />
+              <Route path="/ats" element={<ATSAnalysis />} />
+              <Route path="/interview/setup" element={<InterviewSetup />} />
+              <Route path="/interview/:id/feedback" element={<InterviewFeedback />} />
+            </Route>
+            {/* Interview Room doesn't use the sidebar layout because it needs full screen focus */}
+            <Route path="/interview/:id" element={<InterviewRoom />} />
+          </Route>
+        </Routes>
+      </AnimatePresence>
     </div>
   );
 }
