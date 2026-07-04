@@ -110,7 +110,7 @@ const Dashboard = () => {
             <motion.div 
               animate={{ x: [0, 20, 0], y: [0, -20, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -right-10 -top-10 w-64 h-64 bg-white/20 rounded-full blur-3xl" 
+              className="absolute -right-10 -top-10 w-64 h-64 bg-white dark:bg-slate-800/20 rounded-full blur-3xl" 
             />
             <motion.div 
               animate={{ x: [0, -30, 0], y: [0, 20, 0] }}
@@ -127,7 +127,7 @@ const Dashboard = () => {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map(i => (
-            <div key={i} className="bg-white p-6 rounded-2xl border border-neutral/20 shadow-sm animate-pulse h-32 relative overflow-hidden">
+            <div key={i} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm animate-pulse h-32 relative overflow-hidden">
               <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-neutral-light/50 to-transparent" />
             </div>
           ))}
@@ -139,41 +139,41 @@ const Dashboard = () => {
           initial="hidden"
           animate="show"
         >
-          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white p-6 rounded-2xl border border-neutral/20 shadow-sm relative overflow-hidden group cursor-default">
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm relative overflow-hidden group cursor-default">
              <motion.div className="absolute top-0 left-0 w-1 h-full bg-blue-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Interviews Completed</h3>
-             <AnimatedCounter value={stats.totalInterviews} className="text-4xl font-bold text-neutral-darkBg relative z-10 block" />
+             <AnimatedCounter value={stats.totalInterviews} className="text-4xl font-bold text-neutral-darkBg dark:text-white relative z-10 block" />
              <p className="text-xs text-neutral mt-2 relative z-10">Mock sessions</p>
           </motion.div>
           
-          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white p-6 rounded-2xl border border-neutral/20 shadow-sm relative overflow-hidden group cursor-default">
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm relative overflow-hidden group cursor-default">
              <motion.div className="absolute top-0 left-0 w-1 h-full bg-emerald-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Average Score</h3>
              <div className="flex items-end gap-2 relative z-10">
-               <AnimatedCounter value={stats.averageScore} className="text-4xl font-bold text-neutral-darkBg block" />
+               <AnimatedCounter value={stats.averageScore} className="text-4xl font-bold text-neutral-darkBg dark:text-white block" />
                <span className="text-lg text-neutral font-medium mb-1">%</span>
              </div>
              <p className="text-xs text-neutral mt-2 relative z-10">Across all sessions</p>
           </motion.div>
           
-          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white p-6 rounded-2xl border border-neutral/20 shadow-sm relative overflow-hidden group cursor-default">
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm relative overflow-hidden group cursor-default">
              <motion.div className="absolute top-0 left-0 w-1 h-full bg-purple-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-purple-500/0 group-hover:bg-purple-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Highest Score</h3>
              <div className="flex items-end gap-2 relative z-10">
-               <AnimatedCounter value={stats.highestScore} className="text-4xl font-bold text-neutral-darkBg block" />
+               <AnimatedCounter value={stats.highestScore} className="text-4xl font-bold text-neutral-darkBg dark:text-white block" />
                <span className="text-lg text-neutral font-medium mb-1">%</span>
              </div>
              <p className="text-xs text-neutral mt-2 relative z-10">Personal best</p>
           </motion.div>
           
-          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white p-6 rounded-2xl border border-neutral/20 shadow-sm relative overflow-hidden group cursor-default">
+          <motion.div variants={STAGGER_ITEM} whileHover={CARD_HOVER} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm relative overflow-hidden group cursor-default">
              <motion.div className="absolute top-0 left-0 w-1 h-full bg-orange-500 origin-bottom" whileHover={{ scaleY: 1.1 }} />
              <div className="absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/5 transition-colors duration-300" />
              <h3 className="text-sm font-semibold text-neutral uppercase tracking-wider mb-2 relative z-10">Resumes Uploaded</h3>
-             <AnimatedCounter value={stats.totalResumes} className="text-4xl font-bold text-neutral-darkBg block relative z-10" />
+             <AnimatedCounter value={stats.totalResumes} className="text-4xl font-bold text-neutral-darkBg dark:text-white block relative z-10" />
              <p className="text-xs text-neutral mt-2 relative z-10">In your repository</p>
           </motion.div>
         </motion.div>
@@ -183,9 +183,9 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Recent Activity */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-neutral/20 shadow-sm overflow-hidden flex flex-col">
+        <div className="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl border border-neutral/20 dark:border-slate-700 shadow-sm overflow-hidden flex flex-col">
           <div className="p-6 border-b border-neutral/10 flex justify-between items-center bg-neutral-light/30">
-            <h3 className="font-bold text-lg text-neutral-darkBg">Recent Interviews</h3>
+            <h3 className="font-bold text-lg text-neutral-darkBg dark:text-white">Recent Interviews</h3>
             <Button variant="ghost" size="sm" onClick={() => navigate('/interview/setup')}>+ New Interview</Button>
           </div>
           <div className="p-0 flex-1">
@@ -196,7 +196,7 @@ const Dashboard = () => {
                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4">
                   <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
                 </div>
-                <h4 className="text-lg font-medium text-neutral-darkBg mb-2">No Interviews Yet</h4>
+                <h4 className="text-lg font-medium text-neutral-darkBg dark:text-white mb-2">No Interviews Yet</h4>
                 <p className="text-neutral max-w-sm mb-6">Start your first AI mock interview to see your performance history and analytics here.</p>
                 <Button onClick={() => navigate('/interview/setup')}>Start Practice</Button>
               </div>
@@ -213,7 +213,7 @@ const Dashboard = () => {
                     className="p-6 transition-all flex items-center justify-between group relative border-l-2 border-transparent hover:border-primary"
                   >
                     <div>
-                      <h4 className="font-semibold text-neutral-darkBg group-hover:text-primary transition-colors">
+                      <h4 className="font-semibold text-neutral-darkBg dark:text-white group-hover:text-primary transition-colors">
                         {session.jobDescription?.title || 'Unknown Role'}
                       </h4>
                       <p className="text-sm text-neutral mt-1 group-hover:opacity-80 transition-opacity">
@@ -230,7 +230,7 @@ const Dashboard = () => {
                           )}
                         </div>
                         {session.status === 'completed' && (
-                          <div className={`text-xl font-bold ${session.overallScore >= 80 ? 'text-emerald-500' : session.overallScore >= 60 ? 'text-orange-500' : 'text-neutral-darkBg'}`}>
+                          <div className={`text-xl font-bold ${session.overallScore >= 80 ? 'text-emerald-500' : session.overallScore >= 60 ? 'text-orange-500' : 'text-neutral-darkBg dark:text-white'}`}>
                             {session.overallScore || 0}%
                           </div>
                         )}
@@ -260,12 +260,12 @@ const Dashboard = () => {
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
             </div>
             <h3 className="font-bold text-lg text-primary-dark mb-2">Resume Optimization</h3>
-            <p className="text-sm text-neutral-darkBg mb-6">Upload a new version of your resume to parse latest skills.</p>
+            <p className="text-sm text-neutral-darkBg dark:text-white mb-6">Upload a new version of your resume to parse latest skills.</p>
             <Button className="w-full" variant="secondary" onClick={() => navigate('/resumes')}>Upload Resume</Button>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 border border-neutral/20 shadow-sm">
-            <h3 className="font-bold text-lg text-neutral-darkBg mb-4">Your Rank</h3>
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-neutral/20 dark:border-slate-700 shadow-sm">
+            <h3 className="font-bold text-lg text-neutral-darkBg dark:text-white mb-4">Your Rank</h3>
             {!isLoading && stats && (
               <div className="flex flex-col items-center my-4">
                 <div className="flex flex-col items-center justify-center p-2 mb-2">
@@ -281,7 +281,7 @@ const Dashboard = () => {
                 
                 {rank.next ? (
                   <div className="mt-2 w-full px-2">
-                    <div className="flex justify-between text-xs font-medium text-neutral-darkBg mb-2">
+                    <div className="flex justify-between text-xs font-medium text-neutral-darkBg dark:text-white mb-2">
                       <span>{stats.totalInterviews} Interviews</span>
                       <span>{rank.next} for {rank.nextName}</span>
                     </div>

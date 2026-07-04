@@ -93,24 +93,24 @@ export const SettingsModal = ({ isOpen, onClose }) => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]"
+            className="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]"
           >
           <div className="flex justify-between items-center p-6 border-b border-neutral/10">
-            <h2 className="text-xl font-bold text-neutral-darkBg">Settings</h2>
-            <button onClick={onClose} className="text-neutral hover:text-neutral-darkBg transition-colors">
+            <h2 className="text-xl font-bold text-neutral-darkBg dark:text-white">Settings</h2>
+            <button onClick={onClose} className="text-neutral hover:text-neutral-darkBg dark:text-white transition-colors">
               <X size={20} />
             </button>
           </div>
 
           <div className="flex border-b border-neutral/10">
             <button
-              className={`flex-1 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'profile' ? 'border-primary text-primary' : 'border-transparent text-neutral hover:text-neutral-darkBg'}`}
+              className={`flex-1 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'profile' ? 'border-primary text-primary' : 'border-transparent text-neutral hover:text-neutral-darkBg dark:text-white'}`}
               onClick={() => setActiveTab('profile')}
             >
               Profile
             </button>
             <button
-              className={`flex-1 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'password' ? 'border-primary text-primary' : 'border-transparent text-neutral hover:text-neutral-darkBg'}`}
+              className={`flex-1 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'password' ? 'border-primary text-primary' : 'border-transparent text-neutral hover:text-neutral-darkBg dark:text-white'}`}
               onClick={() => setActiveTab('password')}
             >
               Password
@@ -125,7 +125,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
                 
                 <div className="flex gap-4">
                   <div className="w-1/2">
-                    <label className="block text-sm font-medium text-neutral-darkBg mb-1">First Name</label>
+                    <label className="block text-sm font-medium text-neutral-darkBg dark:text-white mb-1">First Name</label>
                     <Input 
                       value={firstName} 
                       onChange={(e) => setFirstName(e.target.value)} 
@@ -134,7 +134,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
                     />
                   </div>
                   <div className="w-1/2">
-                    <label className="block text-sm font-medium text-neutral-darkBg mb-1">Last Name</label>
+                    <label className="block text-sm font-medium text-neutral-darkBg dark:text-white mb-1">Last Name</label>
                     <Input 
                       value={lastName} 
                       onChange={(e) => setLastName(e.target.value)} 
@@ -145,14 +145,14 @@ export const SettingsModal = ({ isOpen, onClose }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-neutral-darkBg mb-1">Email</label>
+                  <label className="block text-sm font-medium text-neutral-darkBg dark:text-white mb-1">Email</label>
                   <Input 
                     value={user?.email || ''} 
                     disabled 
-                    className="bg-neutral-light cursor-not-allowed"
+                    className="bg-neutral-light dark:bg-slate-700 cursor-not-allowed"
                     autoComplete="off"
                   />
-                  <p className="text-xs text-neutral mt-1">Email cannot be changed.</p>
+                  <p className="text-xs text-neutral dark:text-neutral-400 mt-1">Email cannot be changed.</p>
                 </div>
 
                 <div className="pt-2">
@@ -167,7 +167,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
                 {passwordError && <div className="p-3 bg-red-50 text-red-700 rounded-md text-sm">{passwordError}</div>}
                 
                 <div>
-                  <label className="block text-sm font-medium text-neutral-darkBg mb-1">Old Password</label>
+                  <label className="block text-sm font-medium text-neutral-darkBg dark:text-white mb-1">Old Password</label>
                   <Input 
                     type="password" 
                     value={oldPassword} 
@@ -179,7 +179,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-neutral-darkBg mb-1">New Password</label>
+                  <label className="block text-sm font-medium text-neutral-darkBg dark:text-white mb-1">New Password</label>
                   <Input 
                     type="password" 
                     value={newPassword} 
@@ -191,7 +191,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-neutral-darkBg mb-1">Confirm New Password</label>
+                  <label className="block text-sm font-medium text-neutral-darkBg dark:text-white mb-1">Confirm New Password</label>
                   <Input 
                     type="password" 
                     value={confirmPassword} 
