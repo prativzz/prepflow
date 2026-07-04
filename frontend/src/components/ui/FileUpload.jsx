@@ -58,7 +58,7 @@ export const FileUpload = ({ onFileSelect, accept = ".pdf", maxSize = 5 * 1024 *
         whileHover={{ y: -4, scale: 1.01 }}
         transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
-          "relative flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-[18px] transition-all duration-300 bg-white overflow-hidden",
+          "relative flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-[18px] transition-all duration-300 bg-white dark:bg-neutral-darkInput/50 overflow-hidden",
           isDragging ? "border-primary bg-primary/5 shadow-inner" : "border-neutral/30 hover:border-primary/50 hover:shadow-[0_10px_30px_-10px_rgba(var(--color-primary-rgb),0.2)]",
           error && "border-red-400 bg-red-50"
         )}
@@ -89,7 +89,7 @@ export const FileUpload = ({ onFileSelect, accept = ".pdf", maxSize = 5 * 1024 *
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
             </svg>
           </motion.div>
-          <p className="mb-2 text-sm text-neutral-darkBg">
+          <p className="mb-2 text-sm text-neutral-darkBg dark:text-neutral-textPrimary">
             <span className="font-semibold text-primary">Click to upload</span> or drag and drop
           </p>
           <p className="text-xs text-neutral">PDF files up to {maxSize / (1024 * 1024)}MB</p>
@@ -107,10 +107,10 @@ export const FileUpload = ({ onFileSelect, accept = ".pdf", maxSize = 5 * 1024 *
             className="mt-4 p-3 bg-primary/10 rounded-[12px] flex items-center justify-between border border-primary/20 shadow-sm"
           >
             <div className="flex items-center gap-3 overflow-hidden">
-              <div className="p-2 bg-white rounded flex-shrink-0 text-primary shadow-sm">
+              <div className="p-2 bg-white dark:bg-neutral-darkCard rounded flex-shrink-0 text-primary shadow-sm">
                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
               </div>
-              <span className="text-sm font-medium text-neutral-darkBg truncate">{selectedFile.name}</span>
+              <span className="text-sm font-medium text-neutral-darkBg dark:text-neutral-textPrimary truncate">{selectedFile.name}</span>
             </div>
             <button 
               onClick={() => setSelectedFile(null)}
