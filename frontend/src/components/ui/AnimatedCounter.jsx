@@ -22,5 +22,5 @@ export const AnimatedCounter = ({ value, suffix = '', prefix = '', className = '
     });
   }, [springValue, prefix, suffix]);
 
-  return <motion.span ref={ref} className={className} />;
+  return <motion.span ref={ref} className={className}>{prefix}0{suffix}</motion.span>;
 };
