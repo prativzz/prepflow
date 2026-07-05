@@ -127,13 +127,13 @@ const ResumeAnalysis = () => {
                             )}
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 shrink-0">
                           <a 
                             href={resume.fileUrl?.includes('/raw/') ? `https://docs.google.com/viewer?url=${encodeURIComponent(resume.fileUrl)}` : (resume.fileUrl || '#')} 
                             target="_blank" 
                             rel="noreferrer"
                           >
-                            <Button variant="ghost" size="sm" disabled={!resume.fileUrl}>View PDF</Button>
+                            <Button variant="ghost" size="sm" disabled={!resume.fileUrl} className="whitespace-nowrap">View PDF</Button>
                           </a>
                           <Button 
                             variant="ghost" 
