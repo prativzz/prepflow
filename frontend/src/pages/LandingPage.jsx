@@ -91,12 +91,6 @@ const LandingPage = () => {
                   <PremiumButton to="/register">
                     Start Practicing Free
                   </PremiumButton>
-                  <Link 
-                    to="/login" 
-                    className="px-8 py-4 rounded-full font-semibold text-neutral-600 hover:text-primary hover:bg-primary/5 transition-colors"
-                  >
-                    Sign In
-                  </Link>
                 </>
               )}
             </motion.div>
