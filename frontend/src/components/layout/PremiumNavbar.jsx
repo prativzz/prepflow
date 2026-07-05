@@ -41,21 +41,11 @@ const PremiumNavbar = () => {
         </div>
         
         <nav className="flex items-center gap-6">
-          <Link to="#features" className="text-sm font-medium text-neutral-600 hover:text-primary transition-colors">
-            Features
-          </Link>
-          <Link to="#how-it-works" className="text-sm font-medium text-neutral-600 hover:text-primary transition-colors hidden sm:block">
-            How it works
+          <Link to="/about-us" className="text-sm font-medium text-neutral-600 hover:text-primary transition-colors">
+            About Us
           </Link>
           
-          {isAuthenticated ? (
-            <Link 
-              to="/dashboard" 
-              className="px-5 py-2 text-sm font-semibold bg-primary text-white rounded-full hover:bg-primary-dark transition-all shadow-glow-primary hover:shadow-ambient-hover transform hover:-translate-y-0.5"
-            >
-              Dashboard
-            </Link>
-          ) : (
+          {!isAuthenticated && (
             <div className="flex items-center gap-4">
               <Link 
                 to="/login" 

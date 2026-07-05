@@ -12,6 +12,7 @@ import InterviewSetup from './pages/InterviewSetup';
 import InterviewRoom from './pages/InterviewRoom';
 import InterviewFeedback from './pages/InterviewFeedback';
 import LandingPage from './pages/LandingPage';
+import AboutUs from './pages/AboutUs';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import PublicOnlyRoute from './components/layout/PublicOnlyRoute';
 import { MainLayout } from './components/layout/MainLayout';
@@ -50,6 +51,7 @@ function App() {
         <Routes location={location} key={location.pathname}>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
+          <Route path="/about-us" element={<AboutUs />} />
           {/* Public-only Routes (redirect to dashboard if logged in) */}
           <Route element={<PublicOnlyRoute />}>
             <Route path="/login" element={<Login />} />
