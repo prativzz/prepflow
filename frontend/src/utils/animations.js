@@ -25,6 +25,5 @@ export const STAGGER_ITEM = {
 export const CARD_HOVER = {
   scale: 1.01,
   y: -4,
-  transition: { duration: 0.2, ease: EASING },
-  boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)"
+  transition: { duration: 0.2, ease: EASING }
 };
