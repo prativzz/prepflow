@@ -9,9 +9,9 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#4F8CFF', // Blue Accent
-          dark: '#3b82f6',
-          light: '#60a5fa',
+          DEFAULT: '#4F7CFF', // Premium Blue Accent
+          dark: '#3563E3',
+          light: '#7A9EFF',
         },
         secondary: {
           DEFAULT: '#8B5CF6', // Purple Accent
@@ -21,8 +21,8 @@ export default {
         warning: { DEFAULT: '#F59E0B' },
         danger: { DEFAULT: '#EF4444' },
         accent: {
-          DEFAULT: '#10b981',
-          dark: '#059669',
+          DEFAULT: '#7B8DFF', // Premium Purple Accent
+          dark: '#5F72E8',
         },
         neutral: {
           // Dark Mode specific background layers
@@ -55,8 +55,23 @@ export default {
       animation: {
         'gradient-x': 'gradient-x 15s ease infinite',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'blob': 'blob 7s infinite',
+        'text-shimmer': 'text-shimmer 2.5s ease-out infinite alternate',
       },
       keyframes: {
+        blob: {
+          '0%': { transform: 'translate(0px, 0px) scale(1)' },
+          '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+          '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+          '100%': { transform: 'translate(0px, 0px) scale(1)' },
+        },
+        'text-shimmer': {
+          '0%': { backgroundPosition: '0% 50%' },
+          '100%': { backgroundPosition: '100% 50%' },
+        },
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
+        },
         'gradient-x': {
           '0%, 100%': {
             'background-size': '200% 200%',
