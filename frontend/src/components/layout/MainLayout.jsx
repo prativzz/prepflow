@@ -7,12 +7,12 @@ export const MainLayout = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-neutral-light dark:bg-neutral-darkBg dark:text-neutral-light transition-colors duration-300">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-[#0A0A0A] text-neutral-900 dark:text-neutral-100 transition-colors duration-300 font-sans selection:bg-primary/20 selection:text-primary-dark">
       <Sidebar isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
       
       <div className="flex-1 flex flex-col min-h-screen md:ml-64 w-full">
         {/* Mobile Top Bar */}
-        <div className="md:hidden flex items-center justify-between p-4 bg-white dark:bg-slate-800 border-b border-neutral/20 dark:border-slate-700/50 sticky top-0 z-30 transition-colors duration-300">
+        <div className="md:hidden flex items-center justify-between p-4 bg-white/60 dark:bg-[#0A0A0A]/60 backdrop-blur-xl border-b border-neutral-200/50 dark:border-white/10 sticky top-0 z-30 transition-colors duration-300">
           <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">PrepFlow</h1>
           <button 
             onClick={() => setIsMobileOpen(true)}
