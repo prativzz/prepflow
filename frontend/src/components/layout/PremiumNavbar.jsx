@@ -41,9 +41,6 @@ const PremiumNavbar = () => {
         </div>
         
         <nav className="flex items-center gap-6">
-          <Link to="/about-us" className="text-sm font-medium text-neutral-600 hover:text-primary transition-colors">
-            About Us
-          </Link>
           <AnimatePresence>
             {isScrolled && (
               <motion.div
@@ -80,6 +77,9 @@ const PremiumNavbar = () => {
               </motion.div>
             )}
           </AnimatePresence>
+          <Link to="/about-us" className="text-sm font-medium text-neutral-600 hover:text-primary transition-colors">
+            About Us
+          </Link>
         </nav>
       </div>
     </motion.header>
