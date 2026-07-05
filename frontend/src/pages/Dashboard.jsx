@@ -3,7 +3,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { Button } from '../components/ui/Button';
 import { useNavigate, Link } from 'react-router-dom';
 import { analyticsApi } from '../api/analytics.api';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { PageWrapper } from '../components/layout/PageWrapper';
 import { AnimatedCounter } from '../components/ui/AnimatedCounter';
 import { CARD_HOVER, STAGGER_CONTAINER, STAGGER_ITEM } from '../utils/animations';
@@ -36,21 +36,6 @@ const Dashboard = () => {
   const [recentActivity, setRecentActivity] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [showWelcome] = useState(() => {
-    return !sessionStorage.getItem('welcomeShown');
-  });
-
-  const [isNewUser] = useState(() => {
-    if (!user || !user.createdAt) return false;
-    const createdDate = new Date(user.createdAt);
-    return (new Date() - createdDate < 5 * 60 * 1000); // 5 minutes
-  });
-
-  useEffect(() => {
-    if (showWelcome) {
-      sessionStorage.setItem('welcomeShown', 'true');
-    }
-  }, [showWelcome]);
 
   useEffect(() => {
     const fetchAnalytics = async () => {
@@ -78,51 +63,6 @@ const Dashboard = () => {
 
   return (
     <PageWrapper className="space-y-8">
-      {/* Welcome Banner */}
-      <AnimatePresence>
-        {showWelcome && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-gradient-to-r from-primary via-indigo-500 to-secondary dark:from-primary dark:to-secondary p-8 rounded-[18px] text-white shadow-[0_10px_30px_-10px_rgba(var(--color-primary-rgb),0.5)] dark:shadow-glow-primary relative overflow-hidden bg-[length:200%_200%] animate-gradient-x"
-          >
-            <div className="relative z-10">
-              <h2 className="text-3xl font-bold mb-2 flex items-center">
-                {isNewUser ? 'Welcome, ' : 'Welcome back, '}
-                {user?.name || (user?.email ? user.email.split('@')[0] : 'User')}! 
-                <motion.span 
-                  className="inline-block ml-2 origin-bottom-right"
-                  animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
-                  transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }}
-                >
-                  👋
-                </motion.span>
-              </h2>
-              <p className="text-white/90 max-w-xl font-medium">
-                {isNewUser 
-                  ? "We're excited to have you! Start practicing your interviews to boost your ATS match scores and secure that dream offer." 
-                  : "You're making great progress. Keep practicing your interviews to boost your ATS match scores and secure that dream offer."}
-              </p>
-            </div>
-            
-            {/* Floating blurred circles */}
-            <motion.div 
-              animate={{ x: [0, 20, 0], y: [0, -20, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -right-10 -top-10 w-64 h-64 bg-white dark:bg-white/10 rounded-full blur-3xl mix-blend-overlay" 
-            />
-            <motion.div 
-              animate={{ x: [0, -30, 0], y: [0, 20, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute right-32 -bottom-20 w-48 h-48 bg-primary-light/40 dark:bg-secondary/40 rounded-full blur-3xl mix-blend-overlay" 
-            />
-            
-            {/* Particles */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px] opacity-30"></div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
