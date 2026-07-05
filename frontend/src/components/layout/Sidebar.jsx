@@ -68,10 +68,10 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
           >
             {({ isActive }) => (
               <motion.div
-                className={`relative flex items-center gap-3 px-4 py-3 rounded-[12px] cursor-pointer ${
+                className={`relative flex items-center gap-3 px-4 py-3 rounded-[12px] cursor-pointer transition-colors duration-200 group ${
                   isActive 
                     ? 'text-primary font-medium' 
-                    : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
+                    : 'text-neutral-500 hover:text-primary dark:text-neutral-400 dark:hover:text-primary'
                 }`}
                 whileHover="hover"
                 initial="initial"
@@ -106,8 +106,8 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                 <motion.div 
                   className="relative z-10 flex items-center justify-center text-current"
                   variants={{
-                    hover: { rotate: 5, scale: 1.1, color: "var(--color-primary)", x: 2 },
-                    active: { scale: 1.15, color: "var(--color-primary)" },
+                    hover: { rotate: 5, scale: 1.1, x: 2 },
+                    active: { scale: 1.15 },
                     inactive: { rotate: 0, scale: 1, x: 0 }
                   }}
                   transition={{ duration: 0.2 }}
