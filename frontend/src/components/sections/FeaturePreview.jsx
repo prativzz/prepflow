@@ -57,7 +57,7 @@ const FeaturePreview = () => {
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-md border border-neutral-200 text-sm font-semibold text-neutral-700 mb-6 shadow-sm"
         >
           <Sparkles size={16} className="text-accent" />
-          Powered by Intelligence
+          Prep. Practice. Perform.
         </motion.div>
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
