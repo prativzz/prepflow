@@ -53,7 +53,9 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
       
       <div className={`w-64 bg-white/60 dark:bg-[#0A0A0A]/60 backdrop-blur-xl border-r border-neutral-200/50 dark:border-white/10 h-screen flex flex-col fixed left-0 top-0 z-50 transition-transform duration-300 ease-in-out md:translate-x-0 shadow-[4px_0_24px_rgb(0,0,0,0.02)] dark:shadow-ambient ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-6 border-b border-neutral-200/50 dark:border-white/10 flex justify-between items-center">
-        <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">PrepFlow</h1>
+        <h1 className="font-extrabold text-2xl tracking-tight text-neutral-900 dark:text-white flex items-center gap-2">
+          <span><span className="text-primary">Prep</span>Flow</span>
+        </h1>
         <button onClick={() => setIsMobileOpen(false)} className="md:hidden text-neutral dark:text-neutral-400 hover:text-neutral-darkBg dark:hover:text-white">
           <X size={24} />
         </button>

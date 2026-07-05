@@ -13,7 +13,9 @@ export const MainLayout = () => {
       <div className="flex-1 flex flex-col min-h-screen md:ml-64 w-full">
         {/* Mobile Top Bar */}
         <div className="md:hidden flex items-center justify-between p-4 bg-white/60 dark:bg-[#0A0A0A]/60 backdrop-blur-xl border-b border-neutral-200/50 dark:border-white/10 sticky top-0 z-30 transition-colors duration-300">
-          <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">PrepFlow</h1>
+          <h1 className="font-extrabold text-xl tracking-tight text-neutral-900 dark:text-white flex items-center gap-2">
+            <span><span className="text-primary">Prep</span>Flow</span>
+          </h1>
           <button 
             onClick={() => setIsMobileOpen(true)}
             className="p-2 -mr-2 text-neutral hover:text-neutral-darkBg dark:hover:text-white transition-colors"
