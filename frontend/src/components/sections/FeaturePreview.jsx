@@ -1,121 +1,102 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BarChart3, Brain, CheckCircle2, Mic, FileText, Activity } from 'lucide-react';
+import { Brain, FileText, LineChart, Sparkles } from 'lucide-react';
 
 const FeaturePreview = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.3 }
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 }
     }
   };
 
   const itemVariants = {
-    hidden: { y: 40, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0, opacity: 1,
       transition: { type: 'spring', stiffness: 100, damping: 20 }
     }
   };
 
+  const features = [
+    {
+      icon: <Brain size={24} />,
+      title: "Hyper-Realistic AI Voice",
+      description: "Engage in lifelike, conversational interviews with our advanced AI that adapts to your responses in real-time.",
+      color: "bg-blue-100 text-primary",
+      borderColor: "border-primary/20",
+    },
+    {
+      icon: <FileText size={24} />,
+      title: "Smart Resume Parsing",
+      description: "Upload your resume and instantly get tailored, industry-specific questions based on your actual experience.",
+      color: "bg-purple-100 text-accent",
+      borderColor: "border-accent/20",
+    },
+    {
+      icon: <LineChart size={24} />,
+      title: "Actionable Analytics",
+      description: "Receive deep insights into your pacing, clarity, and STAR method usage with a comprehensive performance breakdown.",
+      color: "bg-emerald-100 text-emerald-600",
+      borderColor: "border-emerald-500/20",
+    }
+  ];
+
   return (
-    <div className="relative w-full max-w-5xl mx-auto mt-32 mb-40 px-6 perspective-[2000px]">
-      
-      {/* Glow behind the preview */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-primary/20 blur-[100px] rounded-full pointer-events-none -z-10"></div>
-      
+    <div className="relative w-full max-w-6xl mx-auto mt-24 mb-40 px-6">
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-primary/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+
+      <div className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-md border border-neutral-200 text-sm font-semibold text-neutral-700 mb-6 shadow-sm"
+        >
+          <Sparkles size={16} className="text-accent" />
+          Powered by Intelligence
+        </motion.div>
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-3xl md:text-5xl font-extrabold text-neutral-900 tracking-tight"
+        >
+          Everything you need to <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">ace it.</span>
+        </motion.h2>
+      </div>
+
       <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        whileHover={{ rotateX: 2, rotateY: -2, y: -5 }}
-        className="relative bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl p-8 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] transition-transform duration-500 transform-gpu"
-        style={{ transformStyle: 'preserve-3d' }}
+        viewport={{ once: true, margin: "-50px" }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-8"
       >
-        {/* Top Header Mock */}
-        <div className="flex items-center justify-between mb-8 pb-6 border-b border-neutral-200/50">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white shadow-lg">
-              <Brain size={24} />
+        {features.map((feature, index) => (
+          <motion.div
+            key={index}
+            variants={itemVariants}
+            whileHover={{ y: -8, scale: 1.02 }}
+            className={`relative bg-white/60 backdrop-blur-xl border border-white/80 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] transition-all duration-300 overflow-hidden group`}
+          >
+            {/* Subtle gradient overlay on hover */}
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br from-transparent to-current ${feature.color.split(' ')[1]} transition-opacity duration-300 pointer-events-none`} />
+            
+            <div className={`w-14 h-14 rounded-2xl ${feature.color} flex items-center justify-center mb-6 border ${feature.borderColor} shadow-sm group-hover:scale-110 transition-transform duration-300`}>
+              {feature.icon}
             </div>
-            <div>
-              <h3 className="font-bold text-lg text-neutral-900">AI Interview Feedback</h3>
-              <p className="text-sm text-neutral-500">Session complete. Score generated.</p>
-            </div>
-          </div>
-          <div className="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold flex items-center gap-2">
-            <CheckCircle2 size={16} /> 94% ATS Match
-          </div>
-        </div>
-
-        {/* Dashboard Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* Card 1: Communication */}
-          <motion.div variants={itemVariants} className="bg-white/70 border border-white/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-blue-100 text-primary">
-                <Mic size={20} />
-              </div>
-              <h4 className="font-semibold text-neutral-800">Communication</h4>
-            </div>
-            <div className="text-3xl font-extrabold text-neutral-900 mb-2">9.2<span className="text-sm font-medium text-neutral-500">/10</span></div>
-            <div className="w-full bg-neutral-100 h-2 rounded-full overflow-hidden">
-              <motion.div 
-                initial={{ width: 0 }}
-                whileInView={{ width: '92%' }}
-                transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
-                className="bg-primary h-full rounded-full"
-              />
-            </div>
+            
+            <h3 className="text-xl font-bold text-neutral-900 mb-3">{feature.title}</h3>
+            <p className="text-neutral-500 leading-relaxed font-medium">
+              {feature.description}
+            </p>
           </motion.div>
-
-          {/* Card 2: Analytics */}
-          <motion.div variants={itemVariants} className="bg-white/70 border border-white/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-purple-100 text-accent">
-                <BarChart3 size={20} />
-              </div>
-              <h4 className="font-semibold text-neutral-800">Clarity & Pacing</h4>
-            </div>
-            <div className="flex items-end gap-2 h-16 mt-4">
-              {[40, 60, 45, 80, 55, 90, 75].map((height, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ height: 0 }}
-                  whileInView={{ height: `${height}%` }}
-                  transition={{ duration: 0.8, delay: 0.8 + (i * 0.1) }}
-                  className="flex-1 bg-accent/80 rounded-t-sm"
-                />
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Card 3: Feedback */}
-          <motion.div variants={itemVariants} className="bg-white/70 border border-white/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-emerald-100 text-emerald-600">
-                <Activity size={20} />
-              </div>
-              <h4 className="font-semibold text-neutral-800">Key Takeaways</h4>
-            </div>
-            <ul className="space-y-3">
-              {[
-                "Strong technical terminology",
-                "Good STAR method usage",
-                "Slight hesitation on Q3"
-              ].map((text, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-neutral-600">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
-                  {text}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-        </div>
+        ))}
       </motion.div>
     </div>
   );
