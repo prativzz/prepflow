@@ -125,6 +125,7 @@ const Login = () => {
                     <Input 
                       type="text" 
                       placeholder="John" 
+                      className="dark:bg-white dark:text-neutral-900 dark:border-neutral/30 dark:placeholder:text-neutral"
                       value={googleFirstName}
                       onChange={(e) => setGoogleFirstName(e.target.value)}
                     />
@@ -134,6 +135,7 @@ const Login = () => {
                     <Input 
                       type="text" 
                       placeholder="Doe" 
+                      className="dark:bg-white dark:text-neutral-900 dark:border-neutral/30 dark:placeholder:text-neutral"
                       value={googleLastName}
                       onChange={(e) => setGoogleLastName(e.target.value)}
                     />
@@ -144,6 +146,7 @@ const Login = () => {
                   <Input 
                     type="password" 
                     placeholder="••••••••" 
+                    className="dark:bg-white dark:text-neutral-900 dark:border-neutral/30 dark:placeholder:text-neutral"
                     value={googlePassword}
                     onChange={(e) => setGooglePassword(e.target.value)}
                   />
@@ -153,6 +156,7 @@ const Login = () => {
                   <Input 
                     type="password" 
                     placeholder="••••••••" 
+                    className="dark:bg-white dark:text-neutral-900 dark:border-neutral/30 dark:placeholder:text-neutral"
                     value={googleConfirmPassword}
                     onChange={(e) => setGoogleConfirmPassword(e.target.value)}
                   />
@@ -176,7 +180,8 @@ const Login = () => {
                   <label className="block text-sm font-medium text-neutral-darkBg mb-1">Email</label>
                   <Input 
                     type="email" 
-                    placeholder="you@example.com" 
+                    placeholder="you@example.com"
+                    className="dark:bg-white dark:text-neutral-900 dark:border-neutral/30 dark:placeholder:text-neutral" 
                     autoComplete="new-password"
                     {...register('email')}
                     error={errors.email?.message}
@@ -190,6 +195,7 @@ const Login = () => {
                   <Input 
                     type="password" 
                     placeholder="••••••••" 
+                    className="dark:bg-white dark:text-neutral-900 dark:border-neutral/30 dark:placeholder:text-neutral"
                     autoComplete="new-password"
                     {...register('password')}
                     error={errors.password?.message}
