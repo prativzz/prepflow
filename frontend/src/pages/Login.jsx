@@ -83,7 +83,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex">
+    <div className="min-h-screen w-full flex bg-white text-neutral-900">
       {/* Left Side - Form */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-16 lg:px-24 xl:px-32 relative">
         <Link to="/" className="absolute top-8 left-8 sm:left-16 lg:left-24 font-extrabold text-2xl tracking-tight text-neutral-900 flex items-center gap-2">
