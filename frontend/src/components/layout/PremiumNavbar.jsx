@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 
 const PremiumNavbar = () => {
   const { isAuthenticated } = useAuthStore();
@@ -44,25 +44,42 @@ const PremiumNavbar = () => {
           <Link to="/about-us" className="text-sm font-medium text-neutral-600 hover:text-primary transition-colors">
             About Us
           </Link>
-          
-          {!isAuthenticated && (
-            <div className="flex items-center gap-4">
-              <Link 
-                to="/login" 
-                className="text-sm font-medium text-neutral-700 hover:text-primary transition-colors hidden sm:block"
+          <AnimatePresence>
+            {isScrolled && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                className="flex items-center gap-4"
               >
-                Sign In
-              </Link>
-              <Link 
-                to="/register" 
-                className="relative overflow-hidden px-5 py-2 text-sm font-semibold bg-primary text-white rounded-full hover:bg-primary-dark transition-all shadow-glow-primary hover:shadow-ambient-hover transform hover:-translate-y-0.5 group"
-              >
-                <span className="relative z-10">Get Started</span>
-                {/* Button shine effect */}
-                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-[shimmer_1.5s_infinite]" />
-              </Link>
-            </div>
-          )}
+                {isAuthenticated ? (
+                  <Link 
+                    to="/dashboard" 
+                    className="px-5 py-2 text-sm font-semibold bg-primary text-white rounded-full hover:bg-primary-dark transition-all shadow-glow-primary hover:shadow-ambient-hover transform hover:-translate-y-0.5"
+                  >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <>
+                    <Link 
+                      to="/login" 
+                      className="text-sm font-medium text-neutral-700 hover:text-primary transition-colors hidden sm:block"
+                    >
+                      Sign In
+                    </Link>
+                    <Link 
+                      to="/register" 
+                      className="relative overflow-hidden px-5 py-2 text-sm font-semibold bg-primary text-white rounded-full hover:bg-primary-dark transition-all shadow-glow-primary hover:shadow-ambient-hover transform hover:-translate-y-0.5 group"
+                    >
+                      <span className="relative z-10">Get Started</span>
+                      {/* Button shine effect */}
+                      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-[shimmer_1.5s_infinite]" />
+                    </Link>
+                  </>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </nav>
       </div>
     </motion.header>
